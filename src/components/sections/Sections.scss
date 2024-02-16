@@ -1,0 +1,52 @@
+#landingPage {
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    height: 100vh;
+
+    .left {
+      position: relative;
+      background-color: #262626;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+
+      .box {
+        .main-heading {
+          font-size: 24px;
+          font-weight: bold;
+        }
+        .second {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          margin-top: 2rem;
+
+          button {
+            outline: none;
+            border: none;
+            font-size: 24px;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            color: #8f7744;
+          }
+        }
+        .third {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          margin-top: 1rem;
+        }
+      }
+    }
+    .right {
+      position: relative;
+      height: 100%;
+      background-image: url(../../assets/images/banner-image);
+    }
+  }
+}
