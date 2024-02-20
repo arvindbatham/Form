@@ -14,12 +14,7 @@ function Section4() {
         <div className="button-box-cls">
           <div className="button-box">
             <button>
-              <span>OK</span>{" "}
-              <CheckIcon
-                style={{
-                  fontSize: "28px",
-                }}
-              />
+              <span>Continue</span>{" "}
             </button>
           </div>
           <span>
