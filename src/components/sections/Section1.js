@@ -4,7 +4,7 @@ import CheckIcon from "@mui/icons-material/Check";
 
 function Section1() {
   return (
-    <div id="section-1" className="section1">
+    <div id="section-1" className="section1 section">
       <div className="main">
         <div className="heading">
           <div className="one">
@@ -27,7 +27,7 @@ function Section1() {
             required
           />
 
-          <div className="second">
+          <div className="button-box-cls">
             <div className="button-box">
               <button>
                 <span>OK</span>{" "}

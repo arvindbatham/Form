@@ -7,7 +7,7 @@ function LandingPage() {
         <div className="left">
           <div className="box">
             <div className="main-heading">REMOTE WORK LOCATION DECLARATION</div>
-            <div className="second">
+            <div className="button-box-cls">
               <button>Start</button>
               <span>
                 press <stron>Enter ↵</stron>
@@ -19,7 +19,7 @@ function LandingPage() {
                   fontSize: "19px",
                 }}
               />
-              <span> Takes 1 minute 30 seconds </span>
+              <span> Takes 1 minute 30 button-box-clss </span>
             </div>
           </div>
         </div>

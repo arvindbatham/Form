@@ -9,7 +9,7 @@ function Section2() {
   };
 
   return (
-    <div className="section2" id="section-2">
+    <div className="section2 section" id="section-2">
       <div className="main">
         <div className="heading">
           <div className="one">
@@ -41,7 +41,7 @@ function Section2() {
                 onKeyPress={handleKeyPress}
               />
             </div>
-            <div className="second">
+            <div className="button-box-cls">
               <div className="button-box">
                 <button>
                   <span>OK</span>{" "}
