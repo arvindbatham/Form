@@ -1,0 +1,109 @@
+.section-date {
+  position: relative;
+
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(44, 44, 44, 0.9);
+    padding: 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    .header-content {
+      span {
+        font-size: 18px;
+        font-weight: normal;
+        color: #f1e2ec;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+    .header-text {
+      font-weight: unset;
+      font-size: 26px;
+      line-height: 32px;
+      color: #f1e2ec;
+      white-space: nowrap;
+    }
+  }
+
+  .main {
+    margin-left: 35px;
+    .heading {
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 16px;
+      color: #f1e2ec;
+
+      .one {
+        font-size: 20px;
+      }
+      .two {
+        line-height: 32px;
+        font-size: 26px;
+      }
+    }
+  }
+
+  .content {
+    margin-left: 32px;
+    .container {
+      .input-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 40%;
+
+        .input-field {
+          label {
+            display: block;
+            margin-bottom: 16px;
+            font-weight: unset;
+            font-size: 16px;
+            line-height: 20px;
+            color: rgb(241, 236, 226);
+          }
+
+          input {
+            width: 100%;
+            padding: 16px 8px 16px 0px;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid rgb(241, 236, 226, 0.7);
+            background: transparent;
+            color: #f1e2ec;
+            font-size: 34px;
+            transition: all 0.1s;
+          }
+
+          input:focus {
+            border-bottom: 3px solid rgb(241, 236, 226);
+          }
+        }
+
+        .day,
+        .month {
+          width: 25%;
+        }
+        .year {
+          width: 36%;
+        }
+
+        .date-dot {
+          font-size: 24px;
+          font-weight: 600;
+          align-self: self-end;
+          padding-bottom: 20px;
+        }
+      }
+    }
+  }
+}

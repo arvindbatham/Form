@@ -1,0 +1,102 @@
+#section-10 {
+  .main {
+    width: 60%;
+    .heading {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .one {
+        font-weight: normal;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+
+        p {
+          font-size: 18px;
+          color: #f1e2ec;
+        }
+      }
+
+      .two {
+        font-weight: unset;
+        font-size: 26px;
+        line-height: 32px;
+        color: #f1e2ec;
+        white-space: nowrap;
+      }
+    }
+    .content {
+        margin-left: 35px;
+      .container {
+        .desc-txt {
+          p {
+            margin-top: 32px;
+            font-weight: unset;
+            font-size: 22px;
+            line-height: 28px;
+            color: rgba(241, 236, 226, 0.7);
+            text-align: start;
+            overflow-wrap: break-word;
+          }
+        }
+
+        .input-cont {
+          margin-top: 32px;
+          width: 25%;
+          .input-field {
+            input {
+              display: none;
+            }
+            margin-top: 16px;
+
+            .label-cont {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border: 1px solid rgba(241, 236, 226, 0.7);
+              padding: 8px;
+              border-radius: 4px;
+              cursor: pointer;
+              background: rgba(241, 236, 226, 0.1);
+              &:hover {
+                background: rgba(241, 236, 226, 0.3);
+              }
+
+              .label-content {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+                span {
+                  padding: 4px 8px;
+                  border: 1px solid rgba(241, 236, 226);
+                  border-radius: 4px;
+                  font-weight: 600;
+                  color:rgb(241, 236, 226) ;
+                }
+
+                p {
+                  font-size: 20px;
+                  font-weight: 500;
+                  color: #f1e2ec;
+                }
+              }
+            }
+            input:checked + .label-cont {
+              border: 2.5px solid #f1e2ec ;
+
+              .label-content{
+                span{
+                    background: #f1e2ec;
+                    color: #262626;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

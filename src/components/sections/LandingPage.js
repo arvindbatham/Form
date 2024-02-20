@@ -10,7 +10,7 @@ function LandingPage() {
             <div className="button-box-cls">
               <button>Start</button>
               <span>
-                press <stron>Enter ↵</stron>
+                press <strong>Enter ↵</strong>
               </span>
             </div>
             <div className="third">

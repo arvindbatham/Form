@@ -16,6 +16,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
+      cursor: pointer;
     }
   }
 }
@@ -172,7 +173,14 @@
   }
 }
 
-#section-4 {
+
+#section-3 {
+  background-color: #262626;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   .main {
     .heading {
       font-size: 24px;
@@ -256,6 +264,45 @@
       .text {
         color: #9fabab;
         font-size: 20px;
+      }
+    }
+  }
+}
+
+
+// Common Styling for Para Sections
+.heading{
+  &-text{
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    color: #f1e2ec;
+  }
+}
+.content{
+  .container{
+    .description-text{
+      .main-text{
+        font-weight: unset;
+        font-size: 22px;
+        line-height: 28px;
+        color: rgba(241, 236, 226, 0.7);
+        text-align: start;
+        overflow-wrap: break-word;
+      }
+    }
+
+    .list-text{     
+      list-style: none;
+      li{
+        font-weight: unset;
+        font-size: 22px;
+        line-height: 28px;
+        color: rgba(241, 236, 226, 0.7);
+        text-align: start;
+        overflow-wrap: break-word;
+        margin-top: 32px;
       }
     }
   }

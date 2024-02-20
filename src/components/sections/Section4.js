@@ -1,25 +1,36 @@
 import React from "react";
-import CheckIcon from "@mui/icons-material/Check";
+import "./Section4.scss";
 
 function Section4() {
+  const content = {
+    heading:
+      "Keep us in the Loop Every Quarter",
+    mainTxt:
+      "Everyone needs to fill out this form every three months, even if there has been no change in remote work location. We'll send you an email reminder.",
+    
+  };
   return (
-    <div id="section-4" className="section">
+    <div className="section" id="section-4">
       <div className="main">
-        <div className="heading">Keep us in the Loop Every Quarter</div>
-        <div className="content">
-          Everyone needs to fill out this form every three months, even if there
-          has been no change in remote work location. We'll send you an email
-          reminder.
+        <div className="heading">
+          <h3 className="heading-text">{content.heading}</h3>
         </div>
-        <div className="button-box-cls">
-          <div className="button-box">
-            <button>
-              <span>Continue</span>{" "}
-            </button>
+        <div className="content">
+          <div className="container">
+            <div className="description-text">
+              <p className="main-text">{content.mainTxt}</p>
+            </div>
+            <div className="button-box-cls">
+              <div className="button-box">
+                <button>
+                  <span>Continue</span>{" "}
+                </button>
+              </div>
+              <span>
+                press <strong>Enter ↵</strong>
+              </span>
+            </div>
           </div>
-          <span>
-            press <stron>Enter ↵</stron>
-          </span>
         </div>
       </div>
     </div>

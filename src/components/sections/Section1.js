@@ -39,7 +39,7 @@ function Section1() {
               </button>
             </div>
             <span>
-              press <stron>Enter ↵</stron>
+              press <strong>Enter ↵</strong>
             </span>
           </div>
         </div>

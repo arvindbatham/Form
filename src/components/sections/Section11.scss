@@ -1,0 +1,68 @@
+#section-11 {
+  .main {
+    margin-left: 0;
+    width: 60%;
+    .heading {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 0;
+
+      .one {
+        font-weight: normal;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+
+        p {
+          font-size: 18px;
+          color: #f1e2ec;
+        }
+      }
+    }
+    .date-desc {
+      margin-left: 56px;
+      margin-top: 16px;
+      font-weight: unset;
+      font-size: 20px;
+      line-height: 28px;
+      color: rgba(241, 236, 226, 0.7);
+      text-align: start;
+      overflow-wrap: break-word;
+    }
+
+    .content {
+      margin-left: 56px;
+      margin-top: 32px;
+
+      .container {
+        .input-container {
+          .input-field {
+            label {
+              margin-bottom: 0;
+            }
+          }
+        }
+        .password-txt {
+          margin-top: 16px;
+          font-weight: unset;
+          font-size: 16px;
+          line-height: 20px;
+          color: rgb(241, 236, 226);
+          font-family: sans-serif;
+          opacity: 0.7;
+
+          a {
+            font-weight: unset;
+            font-size: 16px;
+            line-height: 20px;
+            color: rgb(241, 236, 226);
+            font-family: sans-serif;
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+}
