@@ -4,7 +4,7 @@ import CheckIcon from "@mui/icons-material/Check";
 
 function Section1() {
   return (
-    <div id="section1" className="section1">
+    <div id="section-1" className="section1">
       <div className="main">
         <div className="heading">
           <div className="one">

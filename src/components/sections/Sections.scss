@@ -1,3 +1,25 @@
+.second {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 2rem;
+
+  .button-box {
+    button {
+      outline: none;
+      border: none;
+      font-size: 24px;
+      padding: 10px 15px;
+      font-weight: bold;
+      border-radius: 5px;
+      color: #8f7744;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+}
+
 #landingPage {
   .grid-container {
     display: grid;
@@ -19,22 +41,7 @@
           font-size: 24px;
           font-weight: bold;
         }
-        .second {
-          display: flex;
-          gap: 10px;
-          align-items: center;
-          margin-top: 2rem;
-
-          button {
-            outline: none;
-            border: none;
-            font-size: 24px;
-            padding: 10px 15px;
-            font-weight: bold;
-            border-radius: 5px;
-            color: #8f7744;
-          }
-        }
+       
         .third {
           display: flex;
           gap: 5px;
@@ -51,7 +58,7 @@
   }
 }
 
-#section1 {
+#section-1 {
   background-color: #262626;
   height: 100vh;
   display: flex;
@@ -89,27 +96,7 @@
         font-size: 24px;
         margin-top: 2rem;
       }
-      .second {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        margin-top: 2rem;
-
-        .button-box {
-          button {
-            outline: none;
-            border: none;
-            font-size: 24px;
-            padding: 10px 15px;
-            font-weight: bold;
-            border-radius: 5px;
-            color: #8f7744;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-          }
-        }
-      }
+   
 
       .name:focus {
         outline: none;
@@ -119,7 +106,7 @@
   }
 }
 
-#section2 {
+#section-2 {
   background-color: #262626;
   height: 100vh;
   display: flex;
@@ -186,27 +173,7 @@
             border-bottom: 1px solid white;
           }
         }
-        .second {
-          display: flex;
-          gap: 10px;
-          align-items: center;
-          margin-top: 2rem;
-
-          .button-box {
-            button {
-              outline: none;
-              border: none;
-              font-size: 24px;
-              padding: 10px 15px;
-              font-weight: bold;
-              border-radius: 5px;
-              color: #8f7744;
-              display: flex;
-              align-items: center;
-              gap: 5px;
-            }
-          }
-        }
+      
       }
     }
   }
@@ -219,12 +186,11 @@
   align-items: center;
   justify-content: center;
 
-  .main{
-     width: 60%;
+  .main {
+    width: 60%;
     color: white;
-    
-    .heading{
-        
+
+    .heading {
     }
   }
 }

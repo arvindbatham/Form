@@ -9,7 +9,7 @@ function Section2() {
   };
 
   return (
-    <div className="section2" id="section2">
+    <div className="section2" id="section-2">
       <div className="main">
         <div className="heading">
           <div className="one">
