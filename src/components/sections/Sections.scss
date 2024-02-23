@@ -27,6 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  scroll-snap-align: start;
 
   .main {
     width: 50%;
@@ -35,6 +36,7 @@
 }
 
 #landingPage {
+  scroll-snap-align: start;
   .grid-container {
     display: grid;
     grid-template-columns: repeat(2, 50%);
@@ -62,18 +64,44 @@
           align-items: center;
           margin-top: 1rem;
         }
+
+        animation: toUp 0.7s linear forwards;
       }
     }
     .right {
       position: relative;
       height: 100%;
       background-image: url(../../assets/images/banner-image);
+      background-size: 100%;
+      animation: visibleImage 1s linear forwards;
     }
+  }
+}
+
+@keyframes toUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes visibleImage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
 #section-1 {
   .main {
+    animation: sectionToUp 0.7s linear forwards;
     .heading {
       display: flex;
       align-items: center;
@@ -110,6 +138,16 @@
   }
 }
 
+@keyframes sectionToUp {
+  from {
+    transform: translateY(700px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 #section-2 {
   .main {
     .heading {
@@ -127,11 +165,13 @@
     }
     .content {
       margin-left: 35px;
+      margin-top: 32px;
 
       .container {
         .input-field {
           display: flex;
           justify-content: space-between;
+          margin-top: 16px;
 
           .countries {
             width: 15%;
@@ -171,8 +211,17 @@
       }
     }
   }
-}
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
 
 #section-3 {
   background-color: #262626;
@@ -269,10 +318,9 @@
   }
 }
 
-
 // Common Styling for Para Sections
-.heading{
-  &-text{
+.heading {
+  &-text {
     font-size: 24px;
     line-height: 32px;
     letter-spacing: 1px;
@@ -280,10 +328,10 @@
     color: #f1e2ec;
   }
 }
-.content{
-  .container{
-    .description-text{
-      .main-text{
+.content {
+  .container {
+    .description-text {
+      .main-text {
         font-weight: unset;
         font-size: 22px;
         line-height: 28px;
@@ -293,9 +341,9 @@
       }
     }
 
-    .list-text{     
+    .list-text {
       list-style: none;
-      li{
+      li {
         font-weight: unset;
         font-size: 22px;
         line-height: 28px;
@@ -305,5 +353,87 @@
         margin-top: 32px;
       }
     }
+  }
+}
+
+// Form Header and Footer Styling
+
+#form {
+  position: relative;
+  .Header {
+    font-size: 24px;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .Footer {
+    width: 100%;
+    max-width: 254px;
+    position: fixed;
+    bottom: 3%;
+    right: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .footer-button-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .footer-icon {
+        background-color: rgb(241, 236, 226);
+        padding: 2px 4px;
+        cursor: pointer;
+        border: none;
+
+        .up-icon,
+        .down-icon {
+          fill: #8f7744;
+          font-size: 32px;
+        }
+
+        &:disabled {
+          .up-icon,
+          .down-icon {
+            fill: rgba(143, 118, 69, 0.6);
+          }
+        }
+      }
+      .border-right-icon {
+        border-right: 1px solid rgba(143, 118, 69, 0.3);
+        border-radius: 4px 0px 0px 4px;
+      }
+
+      .border-left-icon {
+        border-radius: 0px 4px 4px 0px;
+      }
+    }
+
+    .brand-container{
+      background-color: rgb(241, 236, 226);
+      padding: 9px 12px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      border-radius: 4px;
+      .brand-txt{
+        font-size: 18px;
+        color: #8f7744;
+        span{
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  // Progress Bar Styling
+  .progress-bar {
+    z-index: 100;
+    height: 6px;
+    background-color: #fff;
+    transition: width 0.3s linear;
   }
 }

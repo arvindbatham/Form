@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Error from "../Error/Error";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
 import "./Section10.scss";
@@ -10,9 +11,26 @@ const content = {
     "By clicking on 'yes', I acknowledge that I have read, understood, and agree to comply with this Remote Work Location Declaration Policy.",
 };
 
-function Section10() {
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+function Section10({onSetSection10, setFormData}) {
+  const [formValue, setFormValue] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
+  const [checkError, setCheckError] = useState(false);
+
+  const changeHandler = (e) => {
+    setCheckError(false);
+    setFormValue(e.target.id);
+    setIsChecked(e.target.checked);
+  };
+
+  const formHandler = (event) => {
+    event.preventDefault();
+    if (!isChecked) {
+      setCheckError(true);
+    } else {
+      setFormData(prevState => { return {...prevState, confirmCheck: formValue}})
+      setIsChecked(false)
+      setCheckError(false)
+      onSetSection10();     
     }
   };
 
@@ -39,7 +57,13 @@ function Section10() {
 
             <div className="input-cont">
               <div className="input-field">
-                <input type="radio" id="yes" name="compliance" />
+                <input
+                  type="radio"
+                  id="yes"
+                  name="compliance"
+                  onChange={changeHandler}
+                  checked={formValue === 'yes'}
+                />
                 <label htmlFor="yes" className="label-cont">
                   <div className="label-content">
                     <span>Y</span>
@@ -48,13 +72,19 @@ function Section10() {
                   <CheckIcon
                     style={{
                       fontSize: "24px",
-                      color: '#f1e2ec'
+                      color: "#f1e2ec",
                     }}
                   />
                 </label>
               </div>
               <div className="input-field">
-                <input type="radio" id="no" name="compliance" />
+                <input
+                  type="radio"
+                  id="no"
+                  name="compliance"
+                  onChange={changeHandler}
+                  checked={formValue === 'no'}
+                />
                 <label htmlFor="no" className="label-cont">
                   <div className="label-content">
                     <span>N</span>
@@ -63,15 +93,15 @@ function Section10() {
                   <CheckIcon
                     style={{
                       fontSize: "24px",
-                      color: '#f1e2ec'
+                      color: "#f1e2ec",
                     }}
                   />
                 </label>
               </div>
             </div>
-            <div className="button-box-cls">
+            { !checkError && <div className="button-box-cls">
               <div className="button-box">
-                <button>
+                <button onClick={formHandler}>
                   <span>OK</span>{" "}
                   <CheckIcon
                     style={{
@@ -83,7 +113,8 @@ function Section10() {
               <span>
                 press <strong>Enter ↵</strong>
               </span>
-            </div>
+            </div> }
+            {checkError && <Error message='Please select an Option' />}
           </div>
         </div>
       </div>

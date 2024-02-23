@@ -1,0 +1,37 @@
+.error-container{
+    margin-top: 24px;
+    width: 60%;
+    padding: 8px 12px;
+    background-color: rgb(247, 230, 230);
+    border-radius: 3px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    animation: toUp 0.3s linear forwards; 
+
+
+    .warning-icon{
+        fill: rgb(175, 4, 4);
+    }
+
+    .warning-text{
+        color: rgb(175, 4, 4);
+        font-weight: normal;
+        span{
+            font-weight: 600;
+        }
+    }
+}
+
+@keyframes toUp {
+    from {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+  
+    to{
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

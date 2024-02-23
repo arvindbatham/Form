@@ -3,7 +3,12 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 const content = `If permanent, write from <current date> to <31-12-9999>
 If temporary, write start and end dates.`;
 
-function Section7() {
+function Section7({onSetSection7}) {
+
+  const formHandler = (event) => {
+    event.preventDefault();
+    onSetSection7();
+  };
   return (
     <div className="section7 section" id="section-7">
       <div className="main">
@@ -24,7 +29,7 @@ function Section7() {
           <div className="text">{content}</div>{" "}
           <div className="button-box-cls">
             <div className="button-box">
-              <button>
+              <button onClick={formHandler}>
                 <span>Continue</span>{" "}
                 {/* <CheckIcon
                   style={{
@@ -34,7 +39,7 @@ function Section7() {
               </button>
             </div>
             <span>
-              press <stron>Enter ↵</stron>
+              press <strong>Enter ↵</strong>
             </span>
           </div>
         </div>

@@ -1,0 +1,61 @@
+#section-12 {
+  animation: moveUp 0.4s linear forwards;
+  .main {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .heading {
+      border: 1px solid rgb(241, 236, 226);
+      padding: 24px;
+      background-color: rgba(241, 236, 226, 0.1);
+      margin-bottom: 50px;
+      animation: bounceEffect 0.5s ease-in-out forwards;
+      svg {
+        font-size: 80px;
+      }
+    }
+
+    .thanks-txt,
+    .aays-txt {
+      font-weight: unset;
+      font-size: 28px;
+      line-height: 32px;
+      color: rgb(241, 236, 226);
+      overflow-wrap: break-word;
+    }
+
+    .aays-txt {
+      margin-top: 16px;
+      span {
+        color: #8f7744;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+@keyframes bounceEffect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes moveUp{
+  from { 
+    opacity: 0;
+  }
+   to{
+    opacity: 1;
+   }
+}

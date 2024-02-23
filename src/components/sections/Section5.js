@@ -1,7 +1,7 @@
 import React from "react";
 import './Section5.scss'
 
-function Section5() {
+function Section5({onSetSection5}) {
   const content = {
     heading:
       "Remote Work Location Security and Reporting Commitments:",
@@ -10,6 +10,11 @@ function Section5() {
       "Digital Security: I will implement appropriate security measures to protect company data, including using secure networks.",
       "Report Changes: I will promptly notify HR if my remote work location changes. This includes temporary (very short-term, short-term, or long-term) or permanent changes in my work-from-home setup.",
     ],
+  };
+
+  const formHandler = (event) => {
+    event.preventDefault();
+    onSetSection5();
   };
   return (
     <div className="section" id="section-5">
@@ -26,7 +31,7 @@ function Section5() {
             </ul>
             <div className="button-box-cls">
               <div className="button-box">
-                <button>
+                <button onClick={formHandler}>
                   <span>Continue</span>{" "}
                 </button>
               </div>

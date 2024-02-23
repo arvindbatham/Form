@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Section3.scss";
+import useEnterKey from "../../CustomHooks/useEnterKey";
 
-function Section3() {
+function Section3({ onSetSection3 }) {
+  const [isEnterKeyPressed, eventObj] = useEnterKey();
   const content = {
     heading:
       "We mandate all team members to re-fill this form whenever there is a change in their work location for more than 4 hours.",
@@ -13,6 +15,15 @@ function Section3() {
       "- Utilizing a co-working space not arranged or booked by the company.",
     ],
   };
+
+  const formHandler = () => {
+    onSetSection3();
+  };
+
+  useEffect(() => {
+    if (isEnterKeyPressed) formHandler();
+  }, [eventObj]);
+
   return (
     <div className="section" id="section-3">
       <div className="main">
@@ -31,7 +42,7 @@ function Section3() {
             </ul>
             <div className="button-box-cls">
               <div className="button-box">
-                <button>
+                <button onClick={formHandler}>
                   <span>Continue</span>{" "}
                 </button>
               </div>

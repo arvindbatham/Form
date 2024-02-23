@@ -1,13 +1,18 @@
 import React from "react";
 import "./Section4.scss";
 
-function Section4() {
+function Section4({onSetSection4}) {
   const content = {
     heading:
       "Keep us in the Loop Every Quarter",
     mainTxt:
       "Everyone needs to fill out this form every three months, even if there has been no change in remote work location. We'll send you an email reminder.",
     
+  };
+
+  const formHandler = (event) => {
+    event.preventDefault();
+    onSetSection4();
   };
   return (
     <div className="section" id="section-4">
@@ -22,7 +27,7 @@ function Section4() {
             </div>
             <div className="button-box-cls">
               <div className="button-box">
-                <button>
+                <button onClick={formHandler}>
                   <span>Continue</span>{" "}
                 </button>
               </div>
