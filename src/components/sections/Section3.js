@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./Section3.scss";
-import useEnterKey from "../../CustomHooks/useEnterKey";
 
-function Section3({ onSetSection3 }) {
-  const [isEnterKeyPressed, eventObj] = useEnterKey();
+function Section3({ section, nextSection, setSection }) {
+  const section3Ref = useRef(null);
   const content = {
     heading:
       "We mandate all team members to re-fill this form whenever there is a change in their work location for more than 4 hours.",
@@ -17,38 +16,45 @@ function Section3({ onSetSection3 }) {
   };
 
   const formHandler = () => {
-    onSetSection3();
+    setSection(4);
   };
 
   useEffect(() => {
-    if (isEnterKeyPressed) formHandler();
-  }, [eventObj]);
+    if (section === 3) {
+      formHandler();     
+    }
+  }, [nextSection]);
 
   return (
-    <div className="section" id="section-3">
-      <div className="main">
-        <div className="heading">
-          <h3 className="heading-text">{content.heading}</h3>
-        </div>
-        <div className="content">
-          <div className="container">
-            <div className="description-text">
-              <p className="main-text">{content.mainTxt}</p>
-            </div>
-            <ul className="list-text">
-              {content.listItems.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-            <div className="button-box-cls">
-              <div className="button-box">
-                <button onClick={formHandler}>
-                  <span>Continue</span>{" "}
-                </button>
+    <div
+      className="section"
+      id="section-3"
+    >
+      <div className="form-styling">
+        <div className="main">
+          <div className="heading">
+            <h3 className="heading-text">{content.heading}</h3>
+          </div>
+          <div className="content">
+            <div className="container">
+              <div className="description-text">
+                <p className="main-text">{content.mainTxt}</p>
               </div>
-              <span>
-                press <strong>Enter ↵</strong>
-              </span>
+              <ul className="list-text">
+                {content.listItems.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+              <div className="button-box-cls">
+                <div className="button-box">
+                  <button type="button" onClick={formHandler}>
+                    <span>Continue</span>{" "}
+                  </button>
+                </div>
+                <span>
+                  press <strong>Enter ↵</strong>
+                </span>
+              </div>
             </div>
           </div>
         </div>

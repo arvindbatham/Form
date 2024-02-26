@@ -9,7 +9,7 @@ const initialValues = {
   year: "",
 };
 
-function Section11({onSetSection11, setFormData}) {
+function Section11({setSection, setFormData}) {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -35,7 +35,7 @@ function Section11({onSetSection11, setFormData}) {
       setFormData(prevState => { return {...prevState, todayDate: dateObject }})
       setFormErrors(null);
       setIsSubmit(false);
-      onSetSection11();
+      setSection(12);
     }
   }, [formErrors, isSubmit]);
 
@@ -105,6 +105,12 @@ function Section11({onSetSection11, setFormData}) {
     return error;
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      formHandler(event);
+    }
+  };
+
   return (
     <div className="section-date section" id="section-11">
       <div className="main">
@@ -132,6 +138,7 @@ function Section11({onSetSection11, setFormData}) {
                   name="day"
                   maxLength={2}
                   onChange={changeHandler}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="date-dot">.</div>
@@ -144,6 +151,7 @@ function Section11({onSetSection11, setFormData}) {
                   name="month"
                   maxLength={2}
                   onChange={changeHandler}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="date-dot">.</div>
@@ -156,6 +164,7 @@ function Section11({onSetSection11, setFormData}) {
                   name="year"
                   maxLength={4}
                   onChange={changeHandler}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
             </div>

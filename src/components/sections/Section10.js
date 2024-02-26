@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Error from "../Error/Error";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
@@ -11,7 +11,7 @@ const content = {
     "By clicking on 'yes', I acknowledge that I have read, understood, and agree to comply with this Remote Work Location Declaration Policy.",
 };
 
-function Section10({onSetSection10, setFormData}) {
+function Section10({ section, nextSection, setSection, setFormData}) {
   const [formValue, setFormValue] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [checkError, setCheckError] = useState(false);
@@ -22,21 +22,43 @@ function Section10({onSetSection10, setFormData}) {
     setIsChecked(e.target.checked);
   };
 
-  const formHandler = (event) => {
-    event.preventDefault();
+  const formHandler = () => {
     if (!isChecked) {
       setCheckError(true);
     } else {
       setFormData(prevState => { return {...prevState, confirmCheck: formValue}})
       setIsChecked(false)
       setCheckError(false)
-      onSetSection10();     
+      setSection(11);  
     }
   };
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (event.target.closest("#section-10")) {
+          formHandler();
+        }
+      }
+    };
+  
+    document.addEventListener("keypress", handleKeyPress);
+  
+    return () => {
+      document.removeEventListener("keypress", handleKeyPress);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (section === 10) {
+      formHandler();
+    }
+  }, [nextSection]);
+
   return (
     <div className="section" id="section-10">
-      <div className="main">
+      <div className="main" >
         <div className="heading">
           <div className="one">
             <p>5</p>

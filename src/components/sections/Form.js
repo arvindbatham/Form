@@ -32,7 +32,31 @@ const initialValues = {
 
 function Form({ section, setSection }) {
   const [formData, setFormData] = useState(initialValues);
+  const [nextSection, setNextSection] = useState(0);
   console.log("Form Data: ", formData);
+
+//   const sectionChangeHandler = () => {
+//     switch (section) {
+//         case 0:
+//             return  <Section1
+//             section={section}
+//             nextSection={nextSection}
+//             setFormData={setFormData}
+//             setSection={setSection}
+//           />
+//         case 1:
+//             return <Section2 />
+//         case 2:
+//             return <Section3 />
+//         case 3:
+//             return <Section4 />
+//         case 4:
+//             return <Section5 />
+//       case 5: return <Section6 />
+//     }
+// }
+
+ 
 
   return (
     <>
@@ -62,69 +86,68 @@ function Form({ section, setSection }) {
           ></div>
         )}
         <Section1
+          section={section}
+          nextSection={nextSection}
           setFormData={setFormData}
-          onSetSection1={() => {
-            setSection(2);
-          }}
+          setSection={setSection}
         />
         <Section2
+          section={section}
+          nextSection={nextSection}
           setFormData={setFormData}
-          onSetSection2={() => {
-            setSection(3);
-          }}
+          setSection={setSection}
         />
         <Section3
-          onSetSection3={() => {
-            setSection(4);
-          }}
+          section={section}
+          nextSection={nextSection}
+          setSection={setSection}
         />
         <Section4
-          onSetSection4={() => {
-            setSection(5);
-          }}
+          section={section}
+          nextSection={nextSection}
+          setSection={setSection}
         />
         <Section5
-          onSetSection5={() => {
-            setSection(6);
-          }}
+          section={section}
+          nextSection={nextSection}
+          setSection={setSection}
         />
         <Section6
+          section={section}
+          nextSection={nextSection}
           setFormData={setFormData}
-          onSetSection6={() => {
-            setSection(7);
-          }}
+          setSection={setSection}
         />
         <Section7
-          onSetSection7={() => {
-            setSection(8);
-          }}
+          section={section}
+          nextSection={nextSection}
+          setSection={setSection}
         />
         <Section8
+          section={section}
+          nextSection={nextSection}
           setFormData={setFormData}
-          onSetSection8={() => {
-            setSection(9);
-          }}
+          setSection={setSection}
         />
         <Section9
+          section={section}
+          nextSection={nextSection}
           setFormData={setFormData}
-          onSetSection9={() => {
-            setSection(10);
-          }}
+          setSection={setSection}
         />
         <Section10
+          section={section}
+          nextSection={nextSection}
           setFormData={setFormData}
-          onSetSection10={() => {
-            setSection(11);
-          }}
+          setSection={setSection}
         />
         <Section11
-          onSetSection11={() => {
-            setSection(12);
-          }}
+          nextSection={nextSection}
+          setSection={setSection}
           setFormData={setFormData}
         />
 
-        {section > 0 && section < 11 && (
+        {section > 0 && section <= 11 && (
           <div className="Footer">
             <div className="footer-button-container">
               <button
@@ -138,6 +161,7 @@ function Form({ section, setSection }) {
               <button
                 disabled={section === 11}
                 className="footer-icon border-left-icon"
+                onClick={() => setNextSection((prevState) => prevState + 1)}
               >
                 <ExpandMoreIcon className="down-icon" />
               </button>

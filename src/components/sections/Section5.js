@@ -1,7 +1,7 @@
-import React from "react";
-import './Section5.scss'
+import React, {useEffect} from "react";
+import "./Section5.scss";
 
-function Section5({onSetSection5}) {
+function Section5({section, nextSection, setSection}) {
   const content = {
     heading:
       "Remote Work Location Security and Reporting Commitments:",
@@ -12,32 +12,56 @@ function Section5({onSetSection5}) {
     ],
   };
 
-  const formHandler = (event) => {
-    event.preventDefault();
-    onSetSection5();
+  const formHandler = () => {
+    setSection(6);
   };
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (event.target.closest("#section-5")) {
+          formHandler(event);
+        }
+      }
+    };
+  
+    document.addEventListener("keypress", handleKeyPress);
+  
+    return () => {
+      document.removeEventListener("keypress", handleKeyPress);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (section === 5) {
+      formHandler();
+    }
+  }, [nextSection]);
   return (
     <div className="section" id="section-5">
-      <div className="main">
-        <div className="heading">
-          <h3 className="heading-text">{content.heading}</h3>
-        </div>
-        <div className="content">
-          <div className="container">
-            <ul className="list-text">
-              {content.listItems.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-            <div className="button-box-cls">
-              <div className="button-box">
-                <button onClick={formHandler}>
-                  <span>Continue</span>{" "}
-                </button>
+      <div className="form-styling">
+        <div className="main">
+          <div className="heading">
+            <h3 className="heading-text">{content.heading}</h3>
+          </div>
+          <div className="content">
+            <div className="container">
+              <ul className="list-text">
+                {content.listItems.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+              <div className="button-box-cls">
+                <div className="button-box">
+                  <button onClick={formHandler}>
+                    <span>Continue</span>{" "}
+                  </button>
+                </div>
+                <span>
+                  press <strong>Enter ↵</strong>
+                </span>
               </div>
-              <span>
-                press <strong>Enter ↵</strong>
-              </span>
             </div>
           </div>
         </div>

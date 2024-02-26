@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
-import useEnterKey from "../../CustomHooks/useEnterKey";
 import Error from "../Error/Error";
 
-function Section2({ onSetSection2, setFormData }) {
+function Section2({ section, nextSection, setSection, setFormData }) {
   const [userPhone, setUserPhone] = useState("");
   const [phoneError, setPhoneError] = useState(false);
   const [valid, setValid] = useState("");
-  const [isEnterKeyPressed, eventObj] = useEnterKey();
 
   const phoneHandler = (event) => {
     setUserPhone((prevState) => event.target.value);
     if (userPhone) {
       setPhoneError(false);
     }
+    if (event.key === "Enter") {
+      formHandler();
+    }
   };
 
-  const formHandler = (event) => {
-    event.preventDefault();
+  const formHandler = () => {
     const regex = /^[1-9]\d{9,14}$/;
 
     if (userPhone === "") {
@@ -30,7 +30,7 @@ function Section2({ onSetSection2, setFormData }) {
       });
       setPhoneError(false);
       setValid("");
-      onSetSection2();
+      setSection(3);
     } else {
       setPhoneError(true);
       setValid("Please enter a valid Phone Number");
@@ -38,8 +38,14 @@ function Section2({ onSetSection2, setFormData }) {
   };
 
   useEffect(() => {
-    if (isEnterKeyPressed) formHandler(eventObj);
-  }, [eventObj]);
+    if (section === 2) {
+      formHandler();
+    }
+  }, [nextSection]);
+
+  useEffect(() => {
+    setPhoneError(false);
+  }, []);
 
   return (
     <div className="section2 section" id="section-2">
@@ -57,7 +63,7 @@ function Section2({ onSetSection2, setFormData }) {
           <div className="two"> Contant Info* </div>
         </div>
         <div className="content">
-          <form onSubmit={formHandler}>
+          <div>
             <p className="input-text">Phone number *</p>
             <div className="container">
               <div className="input-field">
@@ -80,12 +86,13 @@ function Section2({ onSetSection2, setFormData }) {
                   placeholder="1234567890"
                   required
                   onChange={phoneHandler}
+                  onKeyDown={phoneHandler}
                 />
               </div>
               {!phoneError && (
                 <div className="button-box-cls">
                   <div className="button-box">
-                    <button type="submit">
+                    <button onClick={formHandler}>
                       <span>OK</span>{" "}
                       <CheckIcon
                         style={{
@@ -101,7 +108,7 @@ function Section2({ onSetSection2, setFormData }) {
               )}
               {phoneError && <Error message={valid} />}
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

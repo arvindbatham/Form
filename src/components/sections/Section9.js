@@ -10,7 +10,7 @@ const initialValues = {
   year: "",
 };
 
-function Section9({ onSetSection9, setFormData }) {
+function Section9({ section, nextSection, setSection, setFormData }) {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -22,8 +22,7 @@ function Section9({ onSetSection9, setFormData }) {
     });
   };
 
-  const formHandler = (event) => {
-    event.preventDefault();
+  const formHandler = () => {
     const errorStr = validateFrom(formValues);
     setFormErrors((prevState) => errorStr);
     setIsSubmit(true);
@@ -39,7 +38,7 @@ function Section9({ onSetSection9, setFormData }) {
       });
       setIsSubmit(false);
       setFormErrors(null)
-      onSetSection9();
+      setSection(10);
     }
   }, [formErrors, isSubmit]);
 
@@ -108,87 +107,104 @@ function Section9({ onSetSection9, setFormData }) {
     return error;
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      formHandler();
+    }
+  };
+
+  useEffect(() => {
+    if (section === 9) {
+      formHandler();
+    }
+  }, [nextSection]);
+
   return (
     <div className="section-date section" id="section-9">
-      <div className="header">
-        <div className="header-content">
-          <span>
-            4{" "}
-            <ArrowForwardIcon
-              style={{
-                fontSize: "24px",
-              }}
-            />
-          </span>
-        </div>
-        <h3 className="header-text">
-          Timeline for the mentioned Remote Work Location
-        </h3>
-      </div>
       <div className="main">
-        <div className="heading">
-          <div className="one">
-            <p>b.</p>
+        <div className="header">
+          <div className="header-content">
+            <span>
+              4{" "}
+              <ArrowForwardIcon
+                style={{
+                  fontSize: "24px",
+                }}
+              />
+            </span>
           </div>
-          <div className="two"> End Date* </div>
+          <h3 className="header-text">
+            Timeline for the mentioned Remote Work Location
+          </h3>
         </div>
-        <div className="content">
-          <div className="container">
-            <div className="input-container">
-              <div className="input-field day">
-                <label htmlFor="day">Day</label>
-                <input
-                  type="number"
-                  id="day"
-                  placeholder="DD"
-                  name="day"
-                  maxLength={2}
-                  onChange={changeHandler}
-                />
-              </div>
-              <div className="date-dot">.</div>
-              <div className="input-field month">
-                <label htmlFor="month">Month</label>
-                <input
-                  type="number"
-                  id="month"
-                  placeholder="MM"
-                  name="month"
-                  maxLength={2}
-                  onChange={changeHandler}
-                />
-              </div>
-              <div className="date-dot">.</div>
-              <div className="input-field year">
-                <label htmlFor="year">Year</label>
-                <input
-                  type="number"
-                  id="year"
-                  placeholder="YYYY"
-                  name="year"
-                  maxLength={4}
-                  onChange={changeHandler}
-                />
-              </div>
+        <div className="main">
+          <div className="heading">
+            <div className="one">
+              <p>b.</p>
             </div>
-            {!formErrors && (
-              <div className="button-box-cls">
-                <div className="button-box">
-                  <button onClick={formHandler}>
-                    <span>OK</span>{" "}
-                    <CheckIcon
-                      style={{
-                        fontSize: "28px",
-                      }}
-                    />
-                  </button>
+            <div className="two"> End Date* </div>
+          </div>
+          <div className="content">
+            <div className="container">
+              <div className="input-container">
+                <div className="input-field day">
+                  <label htmlFor="day">Day</label>
+                  <input
+                    type="number"
+                    id="day"
+                    placeholder="DD"
+                    name="day"
+                    maxLength={2}
+                    onChange={changeHandler}
+                    onKeyDown={handleKeyDown}
+                  />
                 </div>
-                <span>
-                  press <strong>Enter ↵</strong>
-                </span>
+                <div className="date-dot">.</div>
+                <div className="input-field month">
+                  <label htmlFor="month">Month</label>
+                  <input
+                    type="number"
+                    id="month"
+                    placeholder="MM"
+                    name="month"
+                    maxLength={2}
+                    onChange={changeHandler}
+                    onKeyDown={handleKeyDown}
+                  />
+                </div>
+                <div className="date-dot">.</div>
+                <div className="input-field year">
+                  <label htmlFor="year">Year</label>
+                  <input
+                    type="number"
+                    id="year"
+                    placeholder="YYYY"
+                    name="year"
+                    maxLength={4}
+                    onChange={changeHandler}
+                    onKeyDown={handleKeyDown}
+                  />
+                </div>
               </div>
-            )}
-            {formErrors && <Error message={formErrors} />}
+              {!formErrors && (
+                <div className="button-box-cls">
+                  <div className="button-box">
+                    <button onClick={formHandler}>
+                      <span>OK</span>{" "}
+                      <CheckIcon
+                        style={{
+                          fontSize: "28px",
+                        }}
+                      />
+                    </button>
+                  </div>
+                  <span>
+                    press <strong>Enter ↵</strong>
+                  </span>
+                </div>
+              )}
+              {formErrors && <Error message={formErrors} />}
+            </div>
           </div>
         </div>
       </div>

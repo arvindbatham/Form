@@ -12,7 +12,7 @@ const initialValues = {
   country: "",
 };
 
-function Section6({ onSetSection6, setFormData }) {
+function Section6({ section,nextSection, setSection, setFormData }) {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -26,8 +26,7 @@ function Section6({ onSetSection6, setFormData }) {
     });
   };
 
-  const formHandler = (event) => {
-    event.preventDefault();
+  const formHandler = () => {
     const errorObj = validateFrom(formValues);
     setFormErrors(errorObj);   
     setIsSubmit(true); 
@@ -38,7 +37,7 @@ function Section6({ onSetSection6, setFormData }) {
       setFormData(prevState => { return {...prevState, address: {...formValues}}})
       setIsSubmit(false)
       setFormErrors({})
-      onSetSection6();
+      setSection(7);
     }
   }, [formErrors]);
 
@@ -77,6 +76,18 @@ function Section6({ onSetSection6, setFormData }) {
     return errors;
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      formHandler();
+    }
+  };
+
+  useEffect(() => {
+    if (section === 6) {
+      formHandler();
+    }
+  }, [nextSection]);
+
   const buttonShow =
     isSubmit &&
     (formErrors.address ||
@@ -87,7 +98,7 @@ function Section6({ onSetSection6, setFormData }) {
 
   return (
     <div className="section6 section" id="section-6">
-      <form className="main">
+      <div className="main">
         <div className="heading">
           <div className="one">
             <p>3</p>
@@ -112,6 +123,7 @@ function Section6({ onSetSection6, setFormData }) {
                 id="address"
                 name="address"
                 onChange={changeHandler}
+                onKeyDown={handleKeyDown}
               />
               {isSubmit && formErrors.address && (
                 <Error message={formErrors.address} />
@@ -124,6 +136,7 @@ function Section6({ onSetSection6, setFormData }) {
                 id="line2"
                 name="line2"
                 onChange={changeHandler}
+                onKeyDown={handleKeyDown}
               />
             </div>{" "}
             <div className="three box">
@@ -133,6 +146,7 @@ function Section6({ onSetSection6, setFormData }) {
                 id="city"
                 name="city"
                 onChange={changeHandler}
+                onKeyDown={handleKeyDown}
               />
               {isSubmit && formErrors.city && (
                 <Error message={formErrors.city} />
@@ -145,6 +159,7 @@ function Section6({ onSetSection6, setFormData }) {
                 id="state"
                 name="state"
                 onChange={changeHandler}
+                onKeyDown={handleKeyDown}
               />
               {isSubmit && formErrors.state && (
                 <Error message={formErrors.state} />
@@ -157,6 +172,7 @@ function Section6({ onSetSection6, setFormData }) {
                 id="zip"
                 name="zip"
                 onChange={changeHandler}
+                onKeyDown={handleKeyDown}
               />
               {isSubmit && formErrors.zip && (
                 <Error message={formErrors.zip} />
@@ -169,6 +185,7 @@ function Section6({ onSetSection6, setFormData }) {
                 id="country"
                 name="country"
                 onChange={changeHandler}
+                onKeyDown={handleKeyDown}
               />
               {isSubmit && formErrors.country && (
                 <Error message={formErrors.country} />
@@ -193,7 +210,7 @@ function Section6({ onSetSection6, setFormData }) {
             </div>
           )}
         </div>
-      </form>
+      </div>
     </div>
   );
 }
