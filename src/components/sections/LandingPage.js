@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import useEnterKey from "../../CustomHooks/useEnterKey";
-import aaysImage from '../../assets/images/banner-image'
-function LandingPage({ section, setSection }) {
+import aaysImage from "../../assets/images/banner-image";
+function LandingPage({ section, setSection, mobileScreen }) {
   const [isEnterKeyPressed, eventObj] = useEnterKey();
 
   const landingPageHandler = (event) => {
@@ -17,34 +17,57 @@ function LandingPage({ section, setSection }) {
   return (
     <div id="landingPage">
       <div className="grid-container">
+        {mobileScreen && (
+          <div className="right">
+            <img src={aaysImage} alt="AAYS" />
+          </div>
+        )}
         <div className="left">
           <div className="box">
-            <form onSubmit={landingPageHandler}>
+            <form onSubmit={landingPageHandler} className="landing-form">
               <div className="main-heading">
                 REMOTE WORK LOCATION DECLARATION
               </div>
-              <div className="button-box-cls">
-                <div className="button-box">
-                  <button type="submit">Start</button>
+              <div className="button-cont">
+                {mobileScreen && (
+                  <div className="third">
+                    <AccessTimeIcon
+                      style={{
+                        fontSize: "19px",
+                      }}
+                    />
+                    <span> Takes 1 minute 30 secs </span>
+                  </div>
+                )}
+                <div className="button-box-cls">
+                  <div className="button-box">
+                    <button type="submit">Start</button>
+                  </div>
+                  {!mobileScreen && (
+                    <span>
+                      press <strong>Enter ↵</strong>
+                    </span>
+                  )}
                 </div>
-                <span>
-                  press <strong>Enter ↵</strong>
-                </span>
-              </div>
-              <div className="third">
-                <AccessTimeIcon
-                  style={{
-                    fontSize: "19px",
-                  }}
-                />
-                <span> Takes 1 minute 30 secs </span>
+                {!mobileScreen && (
+                  <div className="third">
+                    <AccessTimeIcon
+                      style={{
+                        fontSize: "19px",
+                      }}
+                    />
+                    <span> Takes 1 minute 30 secs </span>
+                  </div>
+                )}
               </div>
             </form>
           </div>
         </div>
-        <div className="right">
-          <img src={aaysImage} alt="AAYS" />
-        </div>
+        {!mobileScreen && (
+          <div className="right">
+            <img src={aaysImage} alt="AAYS" />
+          </div>
+        )}
       </div>
     </div>
   );

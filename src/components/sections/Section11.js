@@ -9,7 +9,13 @@ const initialValues = {
   year: "",
 };
 
-function Section11({setSection, setFormData}) {
+function Section11({
+  setSection,
+  setFormData,
+  scrollup,
+  setScrollup,
+  mobileScreen,
+}) {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -31,9 +37,12 @@ function Section11({setSection, setFormData}) {
   useEffect(() => {
     if (!formErrors && isSubmit) {
       localStorage.setItem("formValuesTodayDate", JSON.stringify(formValues));
-      const dateStr = formValues.year + '-' + formValues.month + '-' + formValues.day ;    
-      const dateObject = new Date(dateStr);      
-      setFormData(prevState => { return {...prevState, todayDate: dateObject }})
+      const dateStr =
+        formValues.year + "-" + formValues.month + "-" + formValues.day;
+      const dateObject = new Date(dateStr);
+      setFormData((prevState) => {
+        return { ...prevState, todayDate: dateObject };
+      });
       setFormErrors(null);
       setIsSubmit(false);
       setSection(12);
@@ -46,7 +55,9 @@ function Section11({setSection, setFormData}) {
   }, [formValues.day, formValues.month, formValues.year]);
 
   useEffect(() => {
-    const storedFormValues = JSON.parse(localStorage.getItem("formValuesTodayDate"));
+    const storedFormValues = JSON.parse(
+      localStorage.getItem("formValuesTodayDate")
+    );
     if (storedFormValues) {
       setFormValues(storedFormValues);
     }
@@ -56,7 +67,6 @@ function Section11({setSection, setFormData}) {
   const validateFrom = (values) => {
     let error = "";
     const { day, month, year } = values;
-
 
     // Check if day, month, and year are not empty
     if (!day && !month && !year) {
@@ -111,14 +121,32 @@ function Section11({setSection, setFormData}) {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+    if (event.ctrlKey && event.key === "Enter") {
       formHandler(event);
     }
   };
 
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta > 0) {
+      return;
+    }
+
+    if (delta < 0) {
+      setTimeout(() => {
+        setScrollup(true);
+        setSection(10);
+      }, 700);
+    }
+  };
+
   return (
-    <div className="section-date section" id="section-11">
-      <div className="main">
+    <div
+      className="section-date section"
+      id="section-11"
+      onWheel={scrollHandler}
+    >
+      <div className={`main`}>
         <div className="heading">
           <div className="one">
             <p>6</p>
@@ -178,29 +206,45 @@ function Section11({setSection, setFormData}) {
               </div>
             </div>
 
-           { !formErrors && <div>
-              <div className="button-box-cls">
-                <div className="button-box">
-                  <button onClick={formHandler}>
-                    <span>Submit</span>
-                  </button>
+            {!formErrors && !mobileScreen && (
+              <div>
+                <div className="button-box-cls">
+                  <div className="button-box">
+                    <button onClick={formHandler}>
+                      <span>Submit</span>
+                    </button>
+                  </div>
+                  <span>
+                    press <strong>Ctrl + Enter ↵</strong>
+                  </span>
                 </div>
-                <span>
-                  press <strong>Ctrl + Enter ↵</strong>
-                </span>
+                <p className="password-txt">
+                  Never submit passwords! -{" "}
+                  <a href="https://www.typeform.com/help/a/report-abuse-360034113252/">
+                    Report abuse
+                  </a>{" "}
+                </p>
               </div>
-              <p className="password-txt">
-                Never submit passwords! -{" "}
-                <a href="https://www.typeform.com/help/a/report-abuse-360034113252/">
-                  Report abuse
-                </a>{" "}
-              </p>
-            </div>}
+            )}
 
             {formErrors && <Error message={formErrors} />}
           </div>
         </div>
       </div>
+      {mobileScreen && (
+        <div
+          style={{ animationDuration: "0.4s" , justifyContent: "flex-end" }}
+          className={`button-box-cls mobile-btn ${
+            scrollup ? "animateDown" : ""
+          }`}
+        >
+          <div className="button-box" style={{width:'82%'}}>
+            <button onClick={formHandler}>
+              <span>Submit</span>{" "}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

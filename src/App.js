@@ -6,6 +6,18 @@ import { useEffect, useState } from "react";
 import LastPage from "./components/sections/LastPage";
 function App() {
   const [section, setSection] = useState(0);
+  const [mobileScreen, setMobileScreen] = useState(false);
+
+  useEffect(() => {
+    function isMobileOrTablet() {
+      // Check if the user agent string contains any of the common mobile or tablet keywords
+      return /Mobi|Android|iPhone|iPod|iPad|Windows Phone|Tablet/i.test(
+        navigator.userAgent
+      );
+    }
+    setMobileScreen(isMobileOrTablet());
+  },[]);
+  
 
   // useEffect(() => {
   //   console.log("Page ", section);
@@ -21,12 +33,14 @@ function App() {
   // }, [section]);
   return (
     <div className="App">
-      {(section === 0) && (
-        <LandingPage section={section} setSection={setSection} />
+      {section === 0 && (
+        <LandingPage mobileScreen={mobileScreen} section={section} setSection={setSection} />
       )}
-      {(section > 0 && section < 12 )&& <Form section={section} setSection={setSection} />}
+      {section > 0 && section < 12 && (
+        <Form mobileScreen={mobileScreen}  section={section} setSection={setSection} />
+      )}
 
-      {section === 12 && <LastPage />}
+      {section === 12 && <LastPage mobileScreen={mobileScreen}  />}
     </div>
   );
 }

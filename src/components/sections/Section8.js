@@ -10,7 +10,15 @@ const initialValues = {
   year: "",
 };
 
-function Section8({ section, nextSection, setSection, setFormData }) {
+function Section8({
+  section,
+  nextSection,
+  setSection,
+  setFormData,
+  scrollup,
+  setScrollup,
+  mobileScreen,
+}) {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -38,7 +46,7 @@ function Section8({ section, nextSection, setSection, setFormData }) {
         return { ...prevState, startDate: dateObject };
       });
       setIsSubmit(false);
-      setFormErrors(null)
+      setFormErrors(null);
       setSection(9);
     }
   }, [formErrors, isSubmit, nextSection, section]);
@@ -50,7 +58,9 @@ function Section8({ section, nextSection, setSection, setFormData }) {
 
   useEffect(() => {
     setFormErrors("");
-    const storedFormValues = JSON.parse(localStorage.getItem("formValuesStartDate"));
+    const storedFormValues = JSON.parse(
+      localStorage.getItem("formValuesStartDate")
+    );
     if (storedFormValues) {
       setFormValues(storedFormValues);
     }
@@ -114,6 +124,7 @@ function Section8({ section, nextSection, setSection, setFormData }) {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
+      setScrollup(false)
       formHandler();
     }
   };
@@ -128,104 +139,139 @@ function Section8({ section, nextSection, setSection, setFormData }) {
     const delta = e.deltaY;
     if (delta > 0 && section < 12) {
       setTimeout(() => {
+        setScrollup(false);
         formHandler();
-      }, 500);
+      }, 700);
+    }
+
+    if (delta < 0) {
+      setTimeout(() => {
+        setScrollup(true);
+        setSection(7);
+      }, 700);
     }
   };
 
   return (
-    <div className="section-date section" id="section-8" onWheel={scrollHandler}>
-        <div className="header">
-          <div className="header-content">
-            <span>
-              4{" "}
-              <ArrowForwardIcon
-                style={{
-                  fontSize: "24px",
-                }}
-              />
-            </span>
-          </div>
-          <h3 className="header-text">
-            Timeline for the mentioned Remote Work Location
-          </h3>
+    <div
+      className="section-date section"
+      id="section-8"
+      onWheel={scrollHandler}
+    >
+      <div className="header">
+        <div className="header-content">
+          <span>
+            4{" "}
+            <ArrowForwardIcon
+              style={{
+                fontSize: "24px",
+              }}
+            />
+          </span>
         </div>
-      <div className="main">
-        <div className="main">
-          <div className="heading">
-            <div className="one">
-              <p>a.</p>
-            </div>
-            <div className="two"> Start Date* </div>
+        <h3 className="header-text">
+          Timeline for the mentioned Remote Work Location
+        </h3>
+      </div>
+
+      <div className={`main ${scrollup ? "animateDown" : ""}`}>
+        <div className="heading">
+          <div className="one">
+            <p>a.</p>
           </div>
-          <div className="content">
-            <div className="container">
-              <div className="input-container">
-                <div className="input-field day">
-                  <label htmlFor="day">Day</label>
-                  <input
-                    type="number"
-                    id="day"
-                    placeholder="DD"
-                    name="day"
-                    maxLength={2}
-                    onChange={changeHandler}
-                    onKeyDown={handleKeyDown}
-                    value={formValues.day}
-                    autoFocus={true}
-                  />
-                </div>
-                <div className="date-dot">.</div>
-                <div className="input-field month">
-                  <label htmlFor="month">Month</label>
-                  <input
-                    type="number"
-                    id="month"
-                    placeholder="MM"
-                    name="month"
-                    maxLength={2}
-                    onChange={changeHandler}
-                    onKeyDown={handleKeyDown}
-                    value={formValues.month}
-                  />
-                </div>
-                <div className="date-dot">.</div>
-                <div className="input-field year">
-                  <label htmlFor="year">Year</label>
-                  <input
-                    type="number"
-                    id="year"
-                    placeholder="YYYY"
-                    name="year"
-                    maxLength={4}
-                    onChange={changeHandler}
-                    onKeyDown={handleKeyDown}
-                    value={formValues.year}
-                  />
-                </div>
+          <div className="two"> Start Date* </div>
+        </div>
+        <div className="content">
+          <div className="container">
+            <div className="input-container">
+              <div className="input-field day">
+                <label htmlFor="day">Day</label>
+                <input
+                  type="number"
+                  id="day"
+                  placeholder="DD"
+                  name="day"
+                  maxLength={2}
+                  onChange={changeHandler}
+                  onKeyDown={handleKeyDown}
+                  value={formValues.day}
+                  autoFocus={true}
+                />
               </div>
-              {!formErrors && (
-                <div className="button-box-cls">
-                  <div className="button-box">
-                    <button onClick={formHandler}>
-                      <span>OK</span>{" "}
-                      <CheckIcon
-                        style={{
-                          fontSize: "28px",
-                        }}
-                      />
-                    </button>
-                  </div>
-                  <span>
-                    press <strong>Enter ↵</strong>
-                  </span>
-                </div>
-              )}
-              {formErrors && <Error message={formErrors} />}
+              <div className="date-dot">.</div>
+              <div className="input-field month">
+                <label htmlFor="month">Month</label>
+                <input
+                  type="number"
+                  id="month"
+                  placeholder="MM"
+                  name="month"
+                  maxLength={2}
+                  onChange={changeHandler}
+                  onKeyDown={handleKeyDown}
+                  value={formValues.month}
+                />
+              </div>
+              <div className="date-dot">.</div>
+              <div className="input-field year">
+                <label htmlFor="year">Year</label>
+                <input
+                  type="number"
+                  id="year"
+                  placeholder="YYYY"
+                  name="year"
+                  maxLength={4}
+                  onChange={changeHandler}
+                  onKeyDown={handleKeyDown}
+                  value={formValues.year}
+                />
+              </div>
             </div>
+            {!formErrors && !mobileScreen && (
+              <div className="button-box-cls">
+                <div className="button-box">
+                  <button
+                    onClick={() => {
+                      setScrollup(false);
+                      formHandler();
+                    }}
+                  >
+                    <span>OK</span>{" "}
+                    <CheckIcon
+                      style={{
+                        fontSize: "28px",
+                      }}
+                    />
+                  </button>
+                </div>
+                <span>
+                  press <strong>Enter ↵</strong>
+                </span>
+              </div>
+            )}
+            {formErrors && <Error message={formErrors} />}
           </div>
         </div>
       </div>
+      {mobileScreen && (
+        <div
+          style={{ animationDuration: "0.4s", justifyContent: "flex-end" }}
+          className={`button-box-cls mobile-btn ${
+            scrollup ? "animateDown" : ""
+          }`}
+        >
+          <div className="button-box" style={{ width: "82%" }}>
+            <button
+              onClick={() => {
+                setScrollup(false);
+                formHandler();
+              }}
+            >
+              <span>OK</span>{" "}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

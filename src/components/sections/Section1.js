@@ -8,6 +8,9 @@ function Section1({
   nextSection,
   setSection,
   setFormData,
+  scrollup,
+  setScrollup,
+  mobileScreen,
 }) {
   const [userName, setUserName] = useState("");
   const [nameError, setNameError] = useState(false);
@@ -19,6 +22,7 @@ function Section1({
       setNameError(false);
     }
     if (event.key === "Enter") {
+      setScrollup(false);
       formHandler();
     }
   };
@@ -55,14 +59,19 @@ function Section1({
     const delta = e.deltaY;
     if (delta > 0 && section < 12) {
       setTimeout(() => {
+        setScrollup(false);
         formHandler();
-      }, 500);      
+      }, 700);
+    }
+
+    if (delta < 0) {
+      return;
     }
   };
 
   return (
     <div id="section-1" className="section1 section" onWheel={scrollHandler}>
-      <div className={`main`}>
+      <div className={`main ${scrollup ? "animateDown" : ""}`}>
         <div className="heading">
           <div className="one">
             <p>1</p>
@@ -87,10 +96,15 @@ function Section1({
               value={userName}
               autoFocus={true}
             />
-            {!nameError && (
+            {!nameError && !mobileScreen && (
               <div className="button-box-cls">
                 <div className="button-box">
-                  <button onClick={formHandler}>
+                  <button
+                    onClick={() => {
+                      setScrollup(false);
+                      formHandler();
+                    }}
+                  >
                     <span>OK</span>{" "}
                     <CheckIcon
                       style={{
@@ -99,15 +113,35 @@ function Section1({
                     />
                   </button>
                 </div>
-                <span>
-                  press <strong>Enter ↵</strong>
-                </span>
+                {!mobileScreen && (
+                  <span>
+                    press <strong>Enter ↵</strong>
+                  </span>
+                )}
               </div>
             )}
             {nameError && <Error message="Please Enter your Name." />}
           </div>
         </div>
       </div>
+      {mobileScreen && (
+        <div
+          className={`button-box-cls mobile-btn ${
+            scrollup ? "animateDown" : ""
+          }`}
+        >
+          <div className="button-box">
+            <button
+              onClick={() => {
+                setScrollup(false);
+                formHandler();
+              }}
+            >
+              <span>OK</span>{" "}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

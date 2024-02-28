@@ -22,7 +22,15 @@ defaultOption = {
   label: `${country}`,
 };
 
-function Section2({ section, nextSection, setSection, setFormData }) {
+function Section2({
+  section,
+  nextSection,
+  setSection,
+  setFormData,
+  scrollup,
+  setScrollup,
+  mobileScreen,
+}) {
   const [userPhone, setUserPhone] = useState("");
   const [selectedCountryCode, setSelectedCountryCode] = useState(defaultOption);
   const [phoneError, setPhoneError] = useState(false);
@@ -34,11 +42,10 @@ function Section2({ section, nextSection, setSection, setFormData }) {
       setPhoneError(false);
     }
     if (event.key === "Enter") {
+      setScrollup(false)
       formHandler();
     }
   };
-
-  console.log("Select country: ", selectedCountryCode);
 
   const formHandler = () => {
     const regex = /^[1-9]\d{9,14}$/;
@@ -86,14 +93,22 @@ function Section2({ section, nextSection, setSection, setFormData }) {
     const delta = e.deltaY;
     if (delta > 0 && section < 12) {
       setTimeout(() => {
+        setScrollup(false);
         formHandler();
-      }, 500);
+      }, 700);
+    }
+
+    if (delta < 0) {
+      setTimeout(() => {
+        setScrollup(true);
+        setSection(1);
+      }, 700);
     }
   };
 
   return (
     <div className="section2 section" id="section-2" onWheel={scrollHandler}>
-      <div className={`main`}>
+      <div className={`main ${scrollup ? "animateDown" : ""}`}>
         <div className="heading">
           <div className="one">
             <p>2</p>
@@ -117,7 +132,10 @@ function Section2({ section, nextSection, setSection, setFormData }) {
                   value={selectedCountryCode}
                   onChange={(selectedOption) => {
                     setSelectedCountryCode(selectedOption);
-                    localStorage.setItem("countryCode", JSON.stringify(selectedOption));
+                    localStorage.setItem(
+                      "countryCode",
+                      JSON.stringify(selectedOption)
+                    );
                   }}
                   // menuIsOpen={true}
                 />
@@ -133,10 +151,15 @@ function Section2({ section, nextSection, setSection, setFormData }) {
                   autoFocus={true}
                 />
               </div>
-              {!phoneError && (
+              {!phoneError && !mobileScreen && (
                 <div className="button-box-cls">
                   <div className="button-box">
-                    <button onClick={formHandler}>
+                    <button
+                      onClick={() => {
+                        setScrollup(false);
+                        formHandler();
+                      }}
+                    >
                       <span>OK</span>{" "}
                       <CheckIcon
                         style={{
@@ -155,6 +178,25 @@ function Section2({ section, nextSection, setSection, setFormData }) {
           </div>
         </div>
       </div>
+      {mobileScreen && (
+        <div
+          style={{ animationDuration: "0.4s", justifyContent: "flex-end" }}
+          className={`button-box-cls mobile-btn ${
+            scrollup ? "animateDown" : ""
+          }`}
+        >
+          <div className="button-box" style={{ width: "82%" }}>
+            <button
+              onClick={() => {
+                setScrollup(false);
+                formHandler();
+              }}
+            >
+              <span>OK</span>{" "}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

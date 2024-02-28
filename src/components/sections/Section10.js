@@ -11,7 +11,15 @@ const content = {
     "By clicking on 'yes', I acknowledge that I have read, understood, and agree to comply with this Remote Work Location Declaration Policy.",
 };
 
-function Section10({ section, nextSection, setSection, setFormData }) {
+function Section10({
+  section,
+  nextSection,
+  setSection,
+  setFormData,
+  scrollup,
+  setScrollup,
+  mobileScreen,
+}) {
   const [formValue, setFormValue] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [checkError, setCheckError] = useState(false);
@@ -53,23 +61,34 @@ function Section10({ section, nextSection, setSection, setFormData }) {
     const delta = e.deltaY;
     if (delta > 0 && section < 12) {
       setTimeout(() => {
+        setScrollup(false);
         formHandler();
-      }, 500);
+      }, 700);
+    }
+
+    if (delta < 0) {
+      setTimeout(() => {
+        setScrollup(true);
+        setSection(9);
+      }, 700);
     }
   };
 
   return (
     <div
-    onWheel={scrollHandler}
+      onWheel={scrollHandler}
       className="section"
       id="section-10"
       ref={sectionRef}
       onKeyDown={(event) => {
-        if (event.key === "Enter") formHandler();
+        if (event.key === "Enter") {
+          setScrollup(false);
+          formHandler();
+        }
       }}
       tabIndex={0} // This is necessary to make the div focusable
     >
-      <div className="main">
+      <div className={`main ${scrollup ? "animateDown" : ""}`}>
         <div className="heading">
           <div className="one">
             <p>5</p>
@@ -132,10 +151,15 @@ function Section10({ section, nextSection, setSection, setFormData }) {
                 </label>
               </div>
             </div>
-            {!checkError && (
+            {!checkError && !mobileScreen && (
               <div className="button-box-cls">
                 <div className="button-box">
-                  <button onClick={formHandler}>
+                  <button
+                    onClick={() => {
+                      setScrollup(false);
+                      formHandler();
+                    }}
+                  >
                     <span>OK</span>{" "}
                     <CheckIcon
                       style={{
@@ -153,6 +177,25 @@ function Section10({ section, nextSection, setSection, setFormData }) {
           </div>
         </div>
       </div>
+      {mobileScreen && (
+        <div
+          style={{ animationDuration: "0.4s", justifyContent: "flex-end" }}
+          className={`button-box-cls mobile-btn ${
+            scrollup ? "animateDown" : ""
+          }`}
+        >
+          <div className="button-box" style={{ width: "82%" }}>
+            <button
+              onClick={() => {
+                setScrollup(false);
+                formHandler();
+              }}
+            >
+              <span>OK</span>{" "}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

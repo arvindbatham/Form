@@ -12,6 +12,7 @@ import Section10 from "./Section10";
 import Section11 from "./Section11";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const initialValues = {
   username: "",
@@ -31,9 +32,10 @@ const initialValues = {
   todayDate: "",
 };
 
-function Form({ section, setSection }) {
+function Form({ section, setSection, mobileScreen }) {
   const [formData, setFormData] = useState(initialValues);
   const [nextSection, setNextSection] = useState("");
+  const [scrollup, setScrollup] = useState(false);
 
   const sectionChangeHandler = () => {
     const commonProps = {
@@ -41,6 +43,9 @@ function Form({ section, setSection }) {
       nextSection,
       setFormData,
       setSection,
+      scrollup,
+      setScrollup,
+      mobileScreen,
     };
 
     switch (section) {
@@ -71,21 +76,21 @@ function Form({ section, setSection }) {
     }
   };
 
-  const scrollHandler = (e) => {
-    const delta = e.deltaY;
-    if (delta < 0 && section > 1) {
-      setTimeout(() => {
-        if( section !== 1) {
-        setSection((prevState) => prevState - 1);
-        }
-      }, 500);
-     
-    }
-  };
+  // const scrollHandler = (e) => {
+  //   const delta = e.deltaY;
+  //   if (delta < 0 && section > 1) {
+  //     setTimeout(() => {
+  //       if( section !== 1) {
+  //       setSection((prevState) => prevState - 1);
+  //       }
+  //     }, 500);
+
+  //   }
+  // };
 
   return (
     <>
-      <div id="form" onWheel={scrollHandler}>
+      <div id="form">
         {section > 0 && section <= 11 && (
           <div
             style={{
@@ -112,13 +117,16 @@ function Form({ section, setSection }) {
         )}
         {sectionChangeHandler()}
 
-        {section > 0 && section <= 11 && (
+        {section > 0 && section <= 11 && !mobileScreen && (
           <div className="Footer">
             <div className="footer-button-container">
               <button
                 disabled={section === 1}
                 className="footer-icon border-right-icon"
-                onClick={() => setSection((prevState) => prevState - 1)}
+                onClick={() => {
+                  setScrollup(true);
+                  setSection((prevState) => prevState - 1);
+                }}
               >
                 <ExpandLessIcon className="up-icon" />
               </button>
@@ -127,6 +135,7 @@ function Form({ section, setSection }) {
                 disabled={section === 11}
                 className="footer-icon border-left-icon"
                 onClick={() => {
+                  setScrollup(false);
                   if (
                     section === 1 ||
                     section === 2 ||
@@ -145,6 +154,27 @@ function Form({ section, setSection }) {
                 <ExpandMoreIcon className="down-icon" />
               </button>
             </div>
+            <a href="#" className="brand-container">
+              <p className="brand-txt">
+                Powered by <span>AAYS</span>
+              </p>
+            </a>
+          </div>
+        )}
+        {mobileScreen && section > 1 && (
+          <button
+            className="mobile-footer-icon"
+            onClick={() => {
+              setScrollup(true);
+              setSection((prevState) => prevState - 1);
+            }}
+          >
+            <ArrowBackIcon className="left-icon" />
+          </button>
+        )}
+
+        {mobileScreen && (
+          <div className="Footer">
             <a href="#" className="brand-container">
               <p className="brand-txt">
                 Powered by <span>AAYS</span>

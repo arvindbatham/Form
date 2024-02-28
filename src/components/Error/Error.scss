@@ -9,6 +9,9 @@
     align-items: center;
     gap: 8px;
     animation: toUp 0.3s linear forwards; 
+    @media only screen and (max-width: 768px) {
+     width: 95%;
+    }
 
 
     .warning-icon{

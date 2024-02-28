@@ -6,6 +6,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: 768px) {
+      width: 100%;
+    }
 
     .heading {
       border: 1px solid rgb(241, 236, 226);
@@ -25,10 +28,16 @@
       line-height: 32px;
       color: rgb(241, 236, 226);
       overflow-wrap: break-word;
+      @media only screen and (max-width: 768px) {
+       font-size: 20px;
+      }
     }
 
     .aays-txt {
       margin-top: 16px;
+      @media only screen and (max-width: 768px) {
+        margin-top: 8px;
+      }
       span {
         color: #8f7744;
         font-weight: 600;

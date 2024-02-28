@@ -12,7 +12,15 @@ const initialValues = {
   country: "",
 };
 
-function Section6({ section, nextSection, setSection, setFormData }) {
+function Section6({
+  section,
+  nextSection,
+  setSection,
+  setFormData,
+  scrollup,
+  setScrollup,
+  mobileScreen,
+}) {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -81,6 +89,7 @@ function Section6({ section, nextSection, setSection, setFormData }) {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
+      setScrollup(false)
       formHandler();
     }
   };
@@ -103,8 +112,16 @@ function Section6({ section, nextSection, setSection, setFormData }) {
     const delta = e.deltaY;
     if (delta > 0 && section < 12) {
       setTimeout(() => {
+        setScrollup(false);
         formHandler();
-      }, 500);
+      }, 700);
+    }
+
+    if (delta < 0) {
+      setTimeout(() => {
+        setScrollup(true);
+        setSection(5);
+      }, 700);
     }
   };
 
@@ -118,7 +135,7 @@ function Section6({ section, nextSection, setSection, setFormData }) {
 
   return (
     <div className="section6 section" id="section-6" onWheel={scrollHandler}>
-      <div className="main">
+      <div className={`main ${scrollup ? "animateDown" : ""}`}>
         <div className="heading">
           <div className="one">
             <p>3</p>
@@ -217,10 +234,15 @@ function Section6({ section, nextSection, setSection, setFormData }) {
               )}
             </div>
           </div>
-          {!buttonShow && (
+          {!buttonShow && !mobileScreen && (
             <div className="button-box-cls">
               <div className="button-box">
-                <button onClick={formHandler}>
+                <button
+                  onClick={() => {
+                    setScrollup(false);
+                    formHandler();
+                  }}
+                >
                   <span>OK</span>{" "}
                   <CheckIcon
                     style={{
@@ -236,6 +258,25 @@ function Section6({ section, nextSection, setSection, setFormData }) {
           )}
         </div>
       </div>
+      {mobileScreen && (
+        <div
+          style={{ animationDuration: "0.4s", justifyContent: "flex-end" }}
+          className={`button-box-cls mobile-btn ${
+            scrollup ? "animateDown" : ""
+          }`}
+        >
+          <div className="button-box" style={{ width: "82%" }}>
+            <button
+              onClick={() => {
+                setScrollup(false);
+                formHandler();
+              }}
+            >
+              <span>OK</span>{" "}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
