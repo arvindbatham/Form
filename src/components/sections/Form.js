@@ -15,6 +15,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 const initialValues = {
   username: "",
+  countryCode: "",
   phoneNumber: "",
   address: {
     address: "",
@@ -32,35 +33,59 @@ const initialValues = {
 
 function Form({ section, setSection }) {
   const [formData, setFormData] = useState(initialValues);
-  const [nextSection, setNextSection] = useState(0);
-  console.log("Form Data: ", formData);
+  const [nextSection, setNextSection] = useState("");
 
-//   const sectionChangeHandler = () => {
-//     switch (section) {
-//         case 0:
-//             return  <Section1
-//             section={section}
-//             nextSection={nextSection}
-//             setFormData={setFormData}
-//             setSection={setSection}
-//           />
-//         case 1:
-//             return <Section2 />
-//         case 2:
-//             return <Section3 />
-//         case 3:
-//             return <Section4 />
-//         case 4:
-//             return <Section5 />
-//       case 5: return <Section6 />
-//     }
-// }
+  const sectionChangeHandler = () => {
+    const commonProps = {
+      section,
+      nextSection,
+      setFormData,
+      setSection,
+    };
 
- 
+    switch (section) {
+      case 1:
+        return <Section1 {...commonProps} />;
+      case 2:
+        return <Section2 {...commonProps} />;
+      case 3:
+        return <Section3 {...commonProps} />;
+      case 4:
+        return <Section4 {...commonProps} />;
+      case 5:
+        return <Section5 {...commonProps} />;
+      case 6:
+        return <Section6 {...commonProps} />;
+      case 7:
+        return <Section7 {...commonProps} />;
+      case 8:
+        return <Section8 {...commonProps} />;
+      case 9:
+        return <Section9 {...commonProps} />;
+      case 10:
+        return <Section10 {...commonProps} />;
+      case 11:
+        return <Section11 {...commonProps} />;
+      default:
+        return <Section1 {...commonProps} />;
+    }
+  };
+
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta < 0 && section > 1) {
+      setTimeout(() => {
+        if( section !== 1) {
+        setSection((prevState) => prevState - 1);
+        }
+      }, 500);
+     
+    }
+  };
 
   return (
     <>
-      <div id="form">
+      <div id="form" onWheel={scrollHandler}>
         {section > 0 && section <= 11 && (
           <div
             style={{
@@ -85,67 +110,7 @@ function Form({ section, setSection }) {
             className="progress-bar Header"
           ></div>
         )}
-        <Section1
-          section={section}
-          nextSection={nextSection}
-          setFormData={setFormData}
-          setSection={setSection}
-        />
-        <Section2
-          section={section}
-          nextSection={nextSection}
-          setFormData={setFormData}
-          setSection={setSection}
-        />
-        <Section3
-          section={section}
-          nextSection={nextSection}
-          setSection={setSection}
-        />
-        <Section4
-          section={section}
-          nextSection={nextSection}
-          setSection={setSection}
-        />
-        <Section5
-          section={section}
-          nextSection={nextSection}
-          setSection={setSection}
-        />
-        <Section6
-          section={section}
-          nextSection={nextSection}
-          setFormData={setFormData}
-          setSection={setSection}
-        />
-        <Section7
-          section={section}
-          nextSection={nextSection}
-          setSection={setSection}
-        />
-        <Section8
-          section={section}
-          nextSection={nextSection}
-          setFormData={setFormData}
-          setSection={setSection}
-        />
-        <Section9
-          section={section}
-          nextSection={nextSection}
-          setFormData={setFormData}
-          setSection={setSection}
-        />
-        <Section10
-          section={section}
-          nextSection={nextSection}
-          setFormData={setFormData}
-          setSection={setSection}
-        />
-        <Section11
-          nextSection={nextSection}
-          setSection={setSection}
-          setFormData={setFormData}
-        />
+        {sectionChangeHandler()}
 
         {section > 0 && section <= 11 && (
           <div className="Footer">
@@ -161,7 +126,21 @@ function Form({ section, setSection }) {
               <button
                 disabled={section === 11}
                 className="footer-icon border-left-icon"
-                onClick={() => setNextSection((prevState) => prevState + 1)}
+                onClick={() => {
+                  if (
+                    section === 1 ||
+                    section === 2 ||
+                    section === 6 ||
+                    section === 8 ||
+                    section === 9 ||
+                    section === 10 ||
+                    section === 11
+                  ) {
+                    setNextSection((prevState) => prevState + 1);
+                  } else {
+                    setSection((prevState) => prevState + 1);
+                  }
+                }}
               >
                 <ExpandMoreIcon className="down-icon" />
               </button>

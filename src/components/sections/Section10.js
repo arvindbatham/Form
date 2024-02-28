@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Error from "../Error/Error";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
@@ -11,10 +11,12 @@ const content = {
     "By clicking on 'yes', I acknowledge that I have read, understood, and agree to comply with this Remote Work Location Declaration Policy.",
 };
 
-function Section10({ section, nextSection, setSection, setFormData}) {
+function Section10({ section, nextSection, setSection, setFormData }) {
   const [formValue, setFormValue] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [checkError, setCheckError] = useState(false);
+
+  const sectionRef = useRef(null);
 
   const changeHandler = (e) => {
     setCheckError(false);
@@ -26,39 +28,48 @@ function Section10({ section, nextSection, setSection, setFormData}) {
     if (!isChecked) {
       setCheckError(true);
     } else {
-      setFormData(prevState => { return {...prevState, confirmCheck: formValue}})
-      setIsChecked(false)
-      setCheckError(false)
-      setSection(11);  
+      setFormData((prevState) => {
+        return { ...prevState, confirmCheck: formValue };
+      });
+      setIsChecked(false);
+      setCheckError(false);
+      setSection(11);
     }
   };
 
   useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        if (event.target.closest("#section-10")) {
-          formHandler();
-        }
-      }
-    };
-  
-    document.addEventListener("keypress", handleKeyPress);
-  
-    return () => {
-      document.removeEventListener("keypress", handleKeyPress);
-    };
-  }, []);
-
-  useEffect(() => {
     if (section === 10) {
-      formHandler();
+      sectionRef.current.focus();
     }
-  }, [nextSection]);
+  }, [section]);
+
+  // useEffect(() => {
+  //   if (section === 10) {
+  //     formHandler();
+  //   }
+  // }, [nextSection]);
+
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta > 0 && section < 12) {
+      setTimeout(() => {
+        formHandler();
+      }, 500);
+    }
+  };
 
   return (
-    <div className="section" id="section-10">
-      <div className="main" >
+    <div
+    onWheel={scrollHandler}
+      className="section"
+      id="section-10"
+      ref={sectionRef}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") formHandler();
+      }}
+      tabIndex={0} // This is necessary to make the div focusable
+    >
+      <div className="main">
         <div className="heading">
           <div className="one">
             <p>5</p>
@@ -84,7 +95,7 @@ function Section10({ section, nextSection, setSection, setFormData}) {
                   id="yes"
                   name="compliance"
                   onChange={changeHandler}
-                  checked={formValue === 'yes'}
+                  checked={formValue === "yes"}
                 />
                 <label htmlFor="yes" className="label-cont">
                   <div className="label-content">
@@ -105,7 +116,7 @@ function Section10({ section, nextSection, setSection, setFormData}) {
                   id="no"
                   name="compliance"
                   onChange={changeHandler}
-                  checked={formValue === 'no'}
+                  checked={formValue === "no"}
                 />
                 <label htmlFor="no" className="label-cont">
                   <div className="label-content">
@@ -121,22 +132,24 @@ function Section10({ section, nextSection, setSection, setFormData}) {
                 </label>
               </div>
             </div>
-            { !checkError && <div className="button-box-cls">
-              <div className="button-box">
-                <button onClick={formHandler}>
-                  <span>OK</span>{" "}
-                  <CheckIcon
-                    style={{
-                      fontSize: "28px",
-                    }}
-                  />
-                </button>
+            {!checkError && (
+              <div className="button-box-cls">
+                <div className="button-box">
+                  <button onClick={formHandler}>
+                    <span>OK</span>{" "}
+                    <CheckIcon
+                      style={{
+                        fontSize: "28px",
+                      }}
+                    />
+                  </button>
+                </div>
+                <span>
+                  press <strong>Enter ↵</strong>
+                </span>
               </div>
-              <span>
-                press <strong>Enter ↵</strong>
-              </span>
-            </div> }
-            {checkError && <Error message='Please select an Option' />}
+            )}
+            {checkError && <Error message="Please select an Option" />}
           </div>
         </div>
       </div>

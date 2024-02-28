@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useRef } from "react";
 import "./Section5.scss";
 
-function Section5({section, nextSection, setSection}) {
+function Section5({ section, nextSection, setSection }) {
+  const sectionRef = useRef(null);
   const content = {
-    heading:
-      "Remote Work Location Security and Reporting Commitments:",
+    heading: "Remote Work Location Security and Reporting Commitments:",
     listItems: [
       "Physical Security: I will ensure that my remote work environment is secure and free from unauthorized access.",
       "Digital Security: I will implement appropriate security measures to protect company data, including using secure networks.",
@@ -17,29 +17,36 @@ function Section5({section, nextSection, setSection}) {
   };
 
   useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        if (event.target.closest("#section-5")) {
-          formHandler(event);
-        }
-      }
-    };
-  
-    document.addEventListener("keypress", handleKeyPress);
-  
-    return () => {
-      document.removeEventListener("keypress", handleKeyPress);
-    };
-  }, []);
-
-  useEffect(() => {
     if (section === 5) {
-      formHandler();
+      sectionRef.current.focus();
     }
-  }, [nextSection]);
+  }, [section]);
+
+  // useEffect(() => {
+  //   if (section === 5) {
+  //     formHandler();
+  //   }
+  // }, [nextSection]);
+
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta > 0 && section < 12) {
+      setTimeout(() => {
+        formHandler();
+      }, 500);
+    }
+  };
   return (
-    <div className="section" id="section-5">
+    <div
+    onWheel={scrollHandler}
+      className="section"
+      id="section-5"
+      ref={sectionRef}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") formHandler();
+      }}
+      tabIndex={0} // This is necessary to make the div focusable
+    >
       <div className="form-styling">
         <div className="main">
           <div className="heading">

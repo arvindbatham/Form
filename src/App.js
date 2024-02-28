@@ -7,21 +7,21 @@ import LastPage from "./components/sections/LastPage";
 function App() {
   const [section, setSection] = useState(0);
 
-  useEffect(() => {
-    console.log("Page ", section);
-    if (section >= 1) {
-      const sectionId = "section-" + section;
-      const sectionName = document.getElementById(sectionId);
-      sectionName.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "center",
-      });
-    }
-  }, [section]);
+  // useEffect(() => {
+  //   console.log("Page ", section);
+  //   if (section >= 1) {
+  //     const sectionId = "section-" + section;
+  //     const sectionName = document.getElementById(sectionId);
+  //     sectionName.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "center",
+  //       inline: "center",
+  //     });
+  //   }
+  // }, [section]);
   return (
     <div className="App">
-      {!(section > 0) && (
+      {(section === 0) && (
         <LandingPage section={section} setSection={setSection} />
       )}
       {(section > 0 && section < 12 )&& <Form section={section} setSection={setSection} />}

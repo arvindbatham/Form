@@ -1,15 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Error from "../Error/Error";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
 
-function Section1({ section, nextSection, setSection, setFormData }) {
+function Section1({
+  section,
+  nextSection,
+  setSection,
+  setFormData,
+}) {
   const [userName, setUserName] = useState("");
   const [nameError, setNameError] = useState(false);
 
   const nameHandler = (event) => {
-    setUserName((prevState) => event.target.value);
-    if (userName) {
+    const newUserName = event.target.value;
+    setUserName(newUserName);
+    if (newUserName) {
       setNameError(false);
     }
     if (event.key === "Enter") {
@@ -17,11 +23,11 @@ function Section1({ section, nextSection, setSection, setFormData }) {
     }
   };
 
-  
   const formHandler = () => {
     setNameError(false);
     if (userName !== "") {
       setNameError(false);
+      localStorage.setItem("userName", userName);
       setFormData((prevState) => {
         return { ...prevState, username: userName };
       });
@@ -38,21 +44,25 @@ function Section1({ section, nextSection, setSection, setFormData }) {
   }, [nextSection, section]);
 
   useEffect(() => {
-    setNameError(false);    
+    setNameError(false);
+    const storedUserName = localStorage.getItem("userName");
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
   }, []);
 
   const scrollHandler = (e) => {
-    e.preventDefault(); // Prevent the default scroll behavior
-
     const delta = e.deltaY;
-  if (delta > 0 && section < 12) {
-     formHandler();
+    if (delta > 0 && section < 12) {
+      setTimeout(() => {
+        formHandler();
+      }, 500);      
     }
   };
 
   return (
     <div id="section-1" className="section1 section" onWheel={scrollHandler}>
-      <div className="main">
+      <div className={`main`}>
         <div className="heading">
           <div className="one">
             <p>1</p>
@@ -74,6 +84,8 @@ function Section1({ section, nextSection, setSection, setFormData }) {
               placeholder="Your Name"
               onChange={nameHandler}
               onKeyDown={nameHandler}
+              value={userName}
+              autoFocus={true}
             />
             {!nameError && (
               <div className="button-box-cls">

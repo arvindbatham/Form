@@ -2,9 +2,29 @@ import React, { useState, useEffect } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
 import Error from "../Error/Error";
+import Select from "react-select";
+import countryCodes from "../../Data/CountryCodes";
+const options = countryCodes.map((country) => ({
+  value: country.code,
+  label: `${country.country}`,
+}));
+
+const defaultCountryCode = "United States";
+let defaultOption = {};
+
+const { code, country } = countryCodes.find(
+  (country) => country.country === defaultCountryCode
+);
+
+defaultOption = {
+  ...defaultOption,
+  value: code,
+  label: `${country}`,
+};
 
 function Section2({ section, nextSection, setSection, setFormData }) {
   const [userPhone, setUserPhone] = useState("");
+  const [selectedCountryCode, setSelectedCountryCode] = useState(defaultOption);
   const [phoneError, setPhoneError] = useState(false);
   const [valid, setValid] = useState("");
 
@@ -18,6 +38,8 @@ function Section2({ section, nextSection, setSection, setFormData }) {
     }
   };
 
+  console.log("Select country: ", selectedCountryCode);
+
   const formHandler = () => {
     const regex = /^[1-9]\d{9,14}$/;
 
@@ -25,8 +47,13 @@ function Section2({ section, nextSection, setSection, setFormData }) {
       setPhoneError(true);
       setValid("Please enter your Phone Number");
     } else if (regex.test(userPhone)) {
+      localStorage.setItem("userPhone", userPhone);
       setFormData((prevState) => {
-        return { ...prevState, phoneNumber: userPhone };
+        return {
+          ...prevState,
+          phoneNumber: userPhone,
+          countryCode: selectedCountryCode,
+        };
       });
       setPhoneError(false);
       setValid("");
@@ -45,11 +72,28 @@ function Section2({ section, nextSection, setSection, setFormData }) {
 
   useEffect(() => {
     setPhoneError(false);
+    const storedPhone = localStorage.getItem("userPhone");
+    const storedCountryCode = JSON.parse(localStorage.getItem("countryCode"));
+    if (storedPhone) {
+      setUserPhone(storedPhone);
+    }
+    if (storedCountryCode) {
+      setSelectedCountryCode(storedCountryCode);
+    }
   }, []);
 
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta > 0 && section < 12) {
+      setTimeout(() => {
+        formHandler();
+      }, 500);
+    }
+  };
+
   return (
-    <div className="section2 section" id="section-2">
-      <div className="main">
+    <div className="section2 section" id="section-2" onWheel={scrollHandler}>
+      <div className={`main`}>
         <div className="heading">
           <div className="one">
             <p>2</p>
@@ -60,33 +104,33 @@ function Section2({ section, nextSection, setSection, setFormData }) {
             />
           </div>
 
-          <div className="two"> Contant Info* </div>
+          <div className="two"> Contact Info* </div>
         </div>
         <div className="content">
           <div>
             <p className="input-text">Phone number *</p>
             <div className="container">
               <div className="input-field">
-                <select
-                  id="countries"
-                  name="countries"
-                  className="countries"
-                  onChange={(e) => {
-                    console.log(e.target.value);
+                <Select
+                  className="country-code"
+                  options={options}
+                  value={selectedCountryCode}
+                  onChange={(selectedOption) => {
+                    setSelectedCountryCode(selectedOption);
+                    localStorage.setItem("countryCode", JSON.stringify(selectedOption));
                   }}
-                >
-                  <option value="IND">India</option>
-                  <option value="USA">USA</option>
-                </select>
+                  // menuIsOpen={true}
+                />
                 <input
                   type="text"
                   id="phone"
                   name="phone"
                   className="phone"
                   placeholder="1234567890"
-                  required
+                  value={userPhone}
                   onChange={phoneHandler}
                   onKeyDown={phoneHandler}
+                  autoFocus={true}
                 />
               </div>
               {!phoneError && (

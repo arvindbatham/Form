@@ -30,6 +30,7 @@ function Section11({setSection, setFormData}) {
 
   useEffect(() => {
     if (!formErrors && isSubmit) {
+      localStorage.setItem("formValuesTodayDate", JSON.stringify(formValues));
       const dateStr = formValues.year + '-' + formValues.month + '-' + formValues.day ;    
       const dateObject = new Date(dateStr);      
       setFormData(prevState => { return {...prevState, todayDate: dateObject }})
@@ -45,6 +46,10 @@ function Section11({setSection, setFormData}) {
   }, [formValues.day, formValues.month, formValues.year]);
 
   useEffect(() => {
+    const storedFormValues = JSON.parse(localStorage.getItem("formValuesTodayDate"));
+    if (storedFormValues) {
+      setFormValues(storedFormValues);
+    }
     setFormErrors("");
   }, []);
 
@@ -139,6 +144,8 @@ function Section11({setSection, setFormData}) {
                   maxLength={2}
                   onChange={changeHandler}
                   onKeyDown={handleKeyDown}
+                  value={formValues.day}
+                  autoFocus={true}
                 />
               </div>
               <div className="date-dot">.</div>
@@ -152,6 +159,7 @@ function Section11({setSection, setFormData}) {
                   maxLength={2}
                   onChange={changeHandler}
                   onKeyDown={handleKeyDown}
+                  value={formValues.month}
                 />
               </div>
               <div className="date-dot">.</div>
@@ -165,6 +173,7 @@ function Section11({setSection, setFormData}) {
                   maxLength={4}
                   onChange={changeHandler}
                   onKeyDown={handleKeyDown}
+                  value={formValues.year}
                 />
               </div>
             </div>

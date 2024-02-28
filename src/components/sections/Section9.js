@@ -29,7 +29,8 @@ function Section9({ section, nextSection, setSection, setFormData }) {
   };
 
   useEffect(() => {
-    if (!formErrors && isSubmit) {
+    if (!formErrors && isSubmit && section === 9) {
+      localStorage.setItem("formValuesEndDate", JSON.stringify(formValues));
       const dateStr =
         formValues.year + "-" + formValues.month + "-" + formValues.day;
       const dateObject = new Date(dateStr);
@@ -40,7 +41,7 @@ function Section9({ section, nextSection, setSection, setFormData }) {
       setFormErrors(null)
       setSection(10);
     }
-  }, [formErrors, isSubmit]);
+  }, [formErrors, isSubmit, nextSection, section]);
 
   useEffect(() => {
     const errorStr = validateFrom(formValues);
@@ -49,6 +50,10 @@ function Section9({ section, nextSection, setSection, setFormData }) {
 
   useEffect(() => {
     setFormErrors("");
+    const storedFormValues = JSON.parse(localStorage.getItem("formValuesEndDate"));
+    if (storedFormValues) {
+      setFormValues(storedFormValues);
+    }
   }, []);
 
   const validateFrom = (values) => {
@@ -113,15 +118,23 @@ function Section9({ section, nextSection, setSection, setFormData }) {
     }
   };
 
-  useEffect(() => {
-    if (section === 9) {
-      formHandler();
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta > 0 && section < 12) {
+      setTimeout(() => {
+        formHandler();
+      }, 500);
     }
-  }, [nextSection]);
+  };
+
+  // useEffect(() => {
+  //   if (section === 9) {
+  //     formHandler();
+  //   }
+  // }, [nextSection]);
 
   return (
-    <div className="section-date section" id="section-9">
-      <div className="main">
+    <div className="section-date section" id="section-9" onWheel={scrollHandler}>
         <div className="header">
           <div className="header-content">
             <span>
@@ -137,6 +150,7 @@ function Section9({ section, nextSection, setSection, setFormData }) {
             Timeline for the mentioned Remote Work Location
           </h3>
         </div>
+      <div className="main">
         <div className="main">
           <div className="heading">
             <div className="one">
@@ -157,6 +171,8 @@ function Section9({ section, nextSection, setSection, setFormData }) {
                     maxLength={2}
                     onChange={changeHandler}
                     onKeyDown={handleKeyDown}
+                    value={formValues.day}
+                    autoFocus={true}
                   />
                 </div>
                 <div className="date-dot">.</div>
@@ -170,6 +186,7 @@ function Section9({ section, nextSection, setSection, setFormData }) {
                     maxLength={2}
                     onChange={changeHandler}
                     onKeyDown={handleKeyDown}
+                    value={formValues.month}
                   />
                 </div>
                 <div className="date-dot">.</div>
@@ -183,6 +200,7 @@ function Section9({ section, nextSection, setSection, setFormData }) {
                     maxLength={4}
                     onChange={changeHandler}
                     onKeyDown={handleKeyDown}
+                    value={formValues.year}
                   />
                 </div>
               </div>

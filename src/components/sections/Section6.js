@@ -12,12 +12,12 @@ const initialValues = {
   country: "",
 };
 
-function Section6({ section,nextSection, setSection, setFormData }) {
+function Section6({ section, nextSection, setSection, setFormData }) {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const errorCondition = Object.keys(formErrors).length;  
+  const errorCondition = Object.keys(formErrors).length;
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -28,18 +28,21 @@ function Section6({ section,nextSection, setSection, setFormData }) {
 
   const formHandler = () => {
     const errorObj = validateFrom(formValues);
-    setFormErrors(errorObj);   
-    setIsSubmit(true); 
+    setFormErrors(errorObj);
+    setIsSubmit(true);
   };
 
   useEffect(() => {
-    if (errorCondition === 0 && isSubmit) {
-      setFormData(prevState => { return {...prevState, address: {...formValues}}})
-      setIsSubmit(false)
-      setFormErrors({})
+    if (errorCondition === 0 && isSubmit && section === 6) {
+      localStorage.setItem("formValues", JSON.stringify(formValues));
+      setFormData((prevState) => {
+        return { ...prevState, address: { ...formValues } };
+      });
+      setIsSubmit(false);
+      setFormErrors({});
       setSection(7);
     }
-  }, [formErrors]);
+  }, [formErrors, nextSection, section]);
 
   useEffect(() => {
     const errorObj = validateFrom(formValues);
@@ -82,11 +85,28 @@ function Section6({ section,nextSection, setSection, setFormData }) {
     }
   };
 
+  // useEffect(() => {
+  //   if (section === 6) {
+  //     formHandler();
+  //   }
+  // }, [nextSection, section]);
+
   useEffect(() => {
-    if (section === 6) {
-      formHandler();
+    const storedFormValues = JSON.parse(localStorage.getItem("formValues"));
+    if (storedFormValues) {
+      setFormValues(storedFormValues);
     }
-  }, [nextSection]);
+    setFormErrors({});
+  }, []);
+
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta > 0 && section < 12) {
+      setTimeout(() => {
+        formHandler();
+      }, 500);
+    }
+  };
 
   const buttonShow =
     isSubmit &&
@@ -97,7 +117,7 @@ function Section6({ section,nextSection, setSection, setFormData }) {
       formErrors.country);
 
   return (
-    <div className="section6 section" id="section-6">
+    <div className="section6 section" id="section-6" onWheel={scrollHandler}>
       <div className="main">
         <div className="heading">
           <div className="one">
@@ -124,6 +144,8 @@ function Section6({ section,nextSection, setSection, setFormData }) {
                 name="address"
                 onChange={changeHandler}
                 onKeyDown={handleKeyDown}
+                autoFocus={true}
+                value={formValues.address}
               />
               {isSubmit && formErrors.address && (
                 <Error message={formErrors.address} />
@@ -137,6 +159,7 @@ function Section6({ section,nextSection, setSection, setFormData }) {
                 name="line2"
                 onChange={changeHandler}
                 onKeyDown={handleKeyDown}
+                value={formValues.line2}
               />
             </div>{" "}
             <div className="three box">
@@ -147,6 +170,7 @@ function Section6({ section,nextSection, setSection, setFormData }) {
                 name="city"
                 onChange={changeHandler}
                 onKeyDown={handleKeyDown}
+                value={formValues.city}
               />
               {isSubmit && formErrors.city && (
                 <Error message={formErrors.city} />
@@ -160,6 +184,7 @@ function Section6({ section,nextSection, setSection, setFormData }) {
                 name="state"
                 onChange={changeHandler}
                 onKeyDown={handleKeyDown}
+                value={formValues.state}
               />
               {isSubmit && formErrors.state && (
                 <Error message={formErrors.state} />
@@ -173,10 +198,9 @@ function Section6({ section,nextSection, setSection, setFormData }) {
                 name="zip"
                 onChange={changeHandler}
                 onKeyDown={handleKeyDown}
+                value={formValues.zip}
               />
-              {isSubmit && formErrors.zip && (
-                <Error message={formErrors.zip} />
-              )}
+              {isSubmit && formErrors.zip && <Error message={formErrors.zip} />}
             </div>{" "}
             <div className="six box">
               <label htmlFor="country">Country*</label>
@@ -186,6 +210,7 @@ function Section6({ section,nextSection, setSection, setFormData }) {
                 name="country"
                 onChange={changeHandler}
                 onKeyDown={handleKeyDown}
+                value={formValues.country}
               />
               {isSubmit && formErrors.country && (
                 <Error message={formErrors.country} />

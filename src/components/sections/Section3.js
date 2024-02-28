@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import "./Section3.scss";
 
 function Section3({ section, nextSection, setSection }) {
-  const section3Ref = useRef(null);
   const content = {
     heading:
       "We mandate all team members to re-fill this form whenever there is a change in their work location for more than 4 hours.",
@@ -19,16 +18,33 @@ function Section3({ section, nextSection, setSection }) {
     setSection(4);
   };
 
+  const sectionRef = useRef(null);
+
   useEffect(() => {
     if (section === 3) {
-      formHandler();     
+      sectionRef.current.focus();
     }
-  }, [nextSection]);
+  }, [section]);
+
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta > 0 && section < 12) {
+      setTimeout(() => {
+        formHandler();
+      }, 500);
+    }
+  };
 
   return (
     <div
+      onWheel={scrollHandler}
       className="section"
       id="section-3"
+      ref={sectionRef}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") formHandler();
+      }}
+      tabIndex={0} // This is necessary to make the div focusable
     >
       <div className="form-styling">
         <div className="main">

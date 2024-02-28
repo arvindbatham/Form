@@ -1,40 +1,48 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useRef } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 const content = `If permanent, write from <current date> to <31-12-9999>
 If temporary, write start and end dates.`;
 
-function Section7({ section, nextSection, setSection}) {
+function Section7({ section, nextSection, setSection }) {
+  const sectionRef = useRef(null);
 
   const formHandler = () => {
     setSection(8);
   };
 
   useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        if (event.target.closest("#section-7")) {
-          formHandler();
-        }
-      }
-    };
-  
-    document.addEventListener("keypress", handleKeyPress);
-  
-    return () => {
-      document.removeEventListener("keypress", handleKeyPress);
-    };
-  }, []);
-
-  useEffect(() => {
     if (section === 7) {
-      formHandler();
+      sectionRef.current.focus();
     }
-  }, [nextSection]);
+  }, [section]);
+
+  // useEffect(() => {
+  //   if (section === 7) {
+  //     formHandler();
+  //   }
+  // }, [nextSection]);
+
+  const scrollHandler = (e) => {
+    const delta = e.deltaY;
+    if (delta > 0 && section < 12) {
+      setTimeout(() => {
+        formHandler();
+      }, 500);
+    }
+  };
   return (
-    <div className="section7 section" id="section-7">
-      <div className="form-styling">
-        <div className="main" style={{width: '60%'}}>
+    <div
+    onWheel={scrollHandler}
+      className="section7 section"
+      id="section-7"
+      ref={sectionRef}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") formHandler();
+      }}
+      tabIndex={0} // This is necessary to make the div focusable
+    >
+      <div className="form-styling" style={{ width: "100%" }}>
+        <div className="main" >
           <div className="heading">
             <div className="one">
               <p>4</p>

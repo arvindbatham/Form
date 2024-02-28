@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import useEnterKey from "../../CustomHooks/useEnterKey";
+import aaysImage from '../../assets/images/banner-image'
 function LandingPage({ section, setSection }) {
   const [isEnterKeyPressed, eventObj] = useEnterKey();
 
@@ -41,7 +42,9 @@ function LandingPage({ section, setSection }) {
             </form>
           </div>
         </div>
-        <div className="right"></div>
+        <div className="right">
+          <img src={aaysImage} alt="AAYS" />
+        </div>
       </div>
     </div>
   );
