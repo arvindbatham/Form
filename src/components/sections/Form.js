@@ -12,7 +12,10 @@ import Section10 from "./Section10";
 import Section11 from "./Section11";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+const today = new Date();
+const dateString = today.toISOString().split('T')[0];
 
 const initialValues = {
   username: "",
@@ -29,13 +32,16 @@ const initialValues = {
   startDate: "",
   endDate: "",
   confirmCheck: "",
-  todayDate: "",
+  todayDate: dateString,
 };
 
 function Form({ section, setSection, mobileScreen }) {
   const [formData, setFormData] = useState(initialValues);
   const [nextSection, setNextSection] = useState("");
   const [scrollup, setScrollup] = useState(false);
+
+  console.log('Form Data: ', formData);
+  
 
   const sectionChangeHandler = () => {
     const commonProps = {
@@ -69,8 +75,6 @@ function Form({ section, setSection, mobileScreen }) {
         return <Section9 {...commonProps} />;
       case 10:
         return <Section10 {...commonProps} />;
-      case 11:
-        return <Section11 {...commonProps} />;
       default:
         return <Section1 {...commonProps} />;
     }
@@ -96,20 +100,20 @@ function Form({ section, setSection, mobileScreen }) {
             style={{
               width:
                 section === 2
-                  ? "14.28%"
+                  ? "16.67%"
                   : section === 3 ||
                     section === 4 ||
                     section === 5 ||
                     section === 6
-                  ? "28.56%"
+                  ? "33.34%"
                   : section === 7 || section === 8
-                  ? "42.84%"
+                  ? "50.01%"
                   : section === 9
-                  ? "57.12%"
+                  ? "66.68%"
                   : section === 10
-                  ? "71.4%"
+                  ? "83.34%"
                   : section === 11
-                  ? "85.68%"
+                  ? "100%"
                   : "0%",
             }}
             className="progress-bar Header"
@@ -117,7 +121,7 @@ function Form({ section, setSection, mobileScreen }) {
         )}
         {sectionChangeHandler()}
 
-        {section > 0 && section <= 11 && !mobileScreen && (
+        {section > 0 && section <= 10 && !mobileScreen && (
           <div className="Footer">
             <div className="footer-button-container">
               <button
@@ -132,7 +136,7 @@ function Form({ section, setSection, mobileScreen }) {
               </button>
 
               <button
-                disabled={section === 11}
+                disabled={section === 10}
                 className="footer-icon border-left-icon"
                 onClick={() => {
                   setScrollup(false);
@@ -142,8 +146,7 @@ function Form({ section, setSection, mobileScreen }) {
                     section === 6 ||
                     section === 8 ||
                     section === 9 ||
-                    section === 10 ||
-                    section === 11
+                    section === 10
                   ) {
                     setNextSection((prevState) => prevState + 1);
                   } else {

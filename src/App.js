@@ -36,11 +36,11 @@ function App() {
       {section === 0 && (
         <LandingPage mobileScreen={mobileScreen} section={section} setSection={setSection} />
       )}
-      {section > 0 && section < 12 && (
+      {section > 0 && section < 11 && (
         <Form mobileScreen={mobileScreen}  section={section} setSection={setSection} />
       )}
 
-      {section === 12 && <LastPage mobileScreen={mobileScreen}  />}
+      {section === 11 && <LastPage mobileScreen={mobileScreen}  />}
     </div>
   );
 }

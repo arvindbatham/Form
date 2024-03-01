@@ -10,7 +10,7 @@ function LastPage() {
           <ThumbUpIcon />
         </div>
         <p className="thanks-txt">Thanks for completing this form</p>
-        <p className="aays-txt">Powered by <span>AAYS Analytics</span></p>
+        <p className="aays-txt">Powered by <a href="https://www.aaysanalytics.com/">AAYS</a></p>
       </div>
     </div>
   );

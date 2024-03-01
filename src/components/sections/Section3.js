@@ -91,7 +91,7 @@ function Section3({
                       <span>Continue</span>{" "}
                     </button>
                   </div>
-                  <span>
+                  <span className="press-enter">
                     press <strong>Enter ↵</strong>
                   </span>
                 </div>

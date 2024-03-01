@@ -81,9 +81,8 @@ function Section10({
       id="section-10"
       ref={sectionRef}
       onKeyDown={(event) => {
-        if (event.key === "Enter") {
-          setScrollup(false);
-          formHandler();
+        if (event.ctrlKey && event.key === "Enter") {
+          formHandler(event);
         }
       }}
       tabIndex={0} // This is necessary to make the div focusable
@@ -108,7 +107,11 @@ function Section10({
             </div>
 
             <div className="input-cont">
-              <div className="input-field">
+              <div
+                className={`input-field ${
+                  formValue === "yes" ? "blinking-text" : ""
+                }`}
+              >
                 <input
                   type="radio"
                   id="yes"
@@ -121,15 +124,21 @@ function Section10({
                     <span>Y</span>
                     <p>Yes</p>
                   </div>
-                  <CheckIcon
-                    style={{
-                      fontSize: "24px",
-                      color: "#f1e2ec",
-                    }}
-                  />
+                  {formValue === "yes" && (
+                    <CheckIcon
+                      style={{
+                        fontSize: "24px",
+                        color: "#e27bed",
+                      }}
+                    />
+                  )}
                 </label>
               </div>
-              <div className="input-field">
+              <div
+                className={`input-field ${
+                  formValue === "no" ? "blinking-text" : ""
+                }`}
+              >
                 <input
                   type="radio"
                   id="no"
@@ -142,12 +151,14 @@ function Section10({
                     <span>N</span>
                     <p>No</p>
                   </div>
-                  <CheckIcon
-                    style={{
-                      fontSize: "24px",
-                      color: "#f1e2ec",
-                    }}
-                  />
+                  {formValue === "no" && (
+                    <CheckIcon
+                      style={{
+                        fontSize: "24px",
+                        color: "#e27bed",
+                      }}
+                    />
+                  )}
                 </label>
               </div>
             </div>
@@ -169,7 +180,7 @@ function Section10({
                   </button>
                 </div>
                 <span>
-                  press <strong>Enter ↵</strong>
+                  press <strong>Ctrl + Enter ↵</strong>
                 </span>
               </div>
             )}

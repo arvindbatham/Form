@@ -11,13 +11,14 @@
     }
 
     .heading {
-      border: 1px solid rgb(241, 236, 226);
+      border: 1px solid #bb1ccc;
       padding: 24px;
-      background-color: rgba(241, 236, 226, 0.1);
+      background-color: #bb1ccc;
       margin-bottom: 50px;
       animation: bounceEffect 0.7s 0.5s linear forwards;
       svg {
         font-size: 80px;
+        fill: #fff;
       }
     }
 
@@ -38,8 +39,8 @@
       @media only screen and (max-width: 768px) {
         margin-top: 8px;
       }
-      span {
-        color: #8f7744;
+      a {
+        color: #fff;
         font-weight: 600;
       }
     }
