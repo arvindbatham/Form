@@ -163,25 +163,33 @@ function Section10({
               </div>
             </div>
             {!checkError && !mobileScreen && (
-              <div className="button-box-cls">
-                <div className="button-box">
-                  <button
-                    onClick={() => {
-                      setScrollup(false);
-                      formHandler();
-                    }}
-                  >
-                    <span>OK</span>{" "}
-                    <CheckIcon
-                      style={{
-                        fontSize: "28px",
+              <div>
+                <div className="button-box-cls">
+                  <div className="button-box">
+                    <button
+                      onClick={() => {
+                        setScrollup(false);
+                        formHandler();
                       }}
-                    />
-                  </button>
+                    >
+                      <span>Submit</span>{" "}
+                      <CheckIcon
+                        style={{
+                          fontSize: "28px",
+                        }}
+                      />
+                    </button>
+                  </div>
+                  <span>
+                    press <strong>Ctrl + Enter ↵</strong>
+                  </span>
                 </div>
-                <span>
-                  press <strong>Ctrl + Enter ↵</strong>
-                </span>
+                <p className="password-txt">
+                  Never submit passwords! -{" "}
+                  <a href="https://www.typeform.com/help/a/report-abuse-360034113252/">
+                    Report abuse
+                  </a>{" "}
+                </p>
               </div>
             )}
             {checkError && <Error message="Please select an Option" />}
@@ -202,7 +210,7 @@ function Section10({
                 formHandler();
               }}
             >
-              <span>OK</span>{" "}
+              <span>Submit</span>{" "}
             </button>
           </div>
         </div>

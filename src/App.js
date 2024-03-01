@@ -4,9 +4,11 @@ import LandingPage from "./components/sections/LandingPage";
 import Form from "./components/sections/Form";
 import { useEffect, useState } from "react";
 import LastPage from "./components/sections/LastPage";
+import Loader from "./components/Loader/Loader";
 function App() {
   const [section, setSection] = useState(0);
   const [mobileScreen, setMobileScreen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     function isMobileOrTablet() {
@@ -16,8 +18,11 @@ function App() {
       );
     }
     setMobileScreen(isMobileOrTablet());
-  },[]);
-  
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
 
   // useEffect(() => {
   //   console.log("Page ", section);
@@ -33,14 +38,27 @@ function App() {
   // }, [section]);
   return (
     <div className="App">
-      {section === 0 && (
-        <LandingPage mobileScreen={mobileScreen} section={section} setSection={setSection} />
-      )}
-      {section > 0 && section < 11 && (
-        <Form mobileScreen={mobileScreen}  section={section} setSection={setSection} />
-      )}
+      {loading && <Loader />}
+      {!loading && (
+        <>
+          {section === 0 && (
+            <LandingPage
+              mobileScreen={mobileScreen}
+              section={section}
+              setSection={setSection}
+            />
+          )}
+          {section > 0 && section < 11 && (
+            <Form
+              mobileScreen={mobileScreen}
+              section={section}
+              setSection={setSection}
+            />
+          )}
 
-      {section === 11 && <LastPage mobileScreen={mobileScreen}  />}
+          {section === 11 && <LastPage mobileScreen={mobileScreen} />}
+        </>
+      )}
     </div>
   );
 }

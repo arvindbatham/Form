@@ -79,6 +79,13 @@
          width: 100%;
         }
 
+        .react-datepicker__tab-loop{
+          .react-datepicker-popper{
+            transform: translate(95.5px, 163.5px) !important;
+
+          }
+        }
+
         .input-field {
           label {
             display: block;

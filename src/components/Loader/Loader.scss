@@ -1,0 +1,53 @@
+.loader-container {
+  height: 100vh;
+  width: 100%;
+  background-color: #212121;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .text-container {
+    animation: loaderAnimation 0.3s linear forwards;
+    .power-txt,
+    .brand-name {
+      font-size: 18px;
+      color: #ccc;
+      margin-bottom: 6px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .brand-name {
+      color: #fff;
+      font-size: 24px;
+    }
+  }
+
+  .animate-hide {
+    animation: loaderAnimationHide 0.3s linear forwards;
+  }
+
+  .brand-loader {
+    margin-top: 16px;
+  }
+}
+
+@keyframes loaderAnimation {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes loaderAnimationHide {
+  from {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+}

@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 import CheckIcon from "@mui/icons-material/Check";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import "./Section8.scss";
@@ -22,6 +25,9 @@ function Section8({
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const datePickerRef = useRef(null);
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -70,22 +76,18 @@ function Section8({
     let error = "";
     const { day, month, year } = values;
 
-    // Check if day, month, and year are not empty
     if (!day && !month && !year) {
       error = "Please Enter a Date";
     }
 
-    // Check if day, month, and year are numbers
     if (isNaN(day) || isNaN(month) || isNaN(year) || !day || !month || !year) {
       error = "That date doesn't look valid—it's incomplete or doesn't exist";
     }
 
-    // Convert day, month, and year to numbers
     const dayNum = parseInt(day);
     const monthNum = parseInt(month);
     const yearNum = parseInt(year);
 
-    // Check if day, month, and year are within valid ranges
     if (dayNum < 1 || dayNum > 31) {
       error = "Day must be between 1 and 31";
     }
@@ -96,7 +98,6 @@ function Section8({
       error = "Please Enter a valid year";
     }
 
-    // Check if the year is a leap year
     if ((yearNum % 4 === 0 && yearNum % 100 !== 0) || yearNum % 400 === 0) {
       const daysInMonth = [
         31,
@@ -124,16 +125,10 @@ function Section8({
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      setScrollup(false)
+      setScrollup(false);
       formHandler();
     }
   };
-
-  // useEffect(() => {
-  //   if (section === 8) {
-  //     formHandler();
-  //   }
-  // }, [nextSection]);
 
   const scrollHandler = (e) => {
     const delta = e.deltaY;
@@ -151,6 +146,23 @@ function Section8({
       }, 700);
     }
   };
+
+  const handleChange = (date) => {
+    setSelectedDate(date);
+    const day = format(date, "dd");
+    const month = format(date, "MM");
+    const year = format(date, "yyyy");
+    setFormValues({ day, month, year });
+  };
+
+  const openDatePicker = () => {
+    if (mobileScreen) {
+      datePickerRef.current.setOpen(true);
+    } else {
+      return;
+    }
+  };
+
 
   return (
     <div
@@ -183,7 +195,7 @@ function Section8({
         </div>
         <div className="content">
           <div className="container">
-            <div className="input-container">
+            <div className="input-container" onClick={openDatePicker}>
               <div className="input-field day">
                 <label htmlFor="day">Day</label>
                 <input
@@ -226,6 +238,15 @@ function Section8({
                   value={formValues.year}
                 />
               </div>
+              {mobileScreen && (
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={handleChange}
+                  dateFormat="dd/MM/yyyy"
+                  ref={datePickerRef}
+                  customInput={<input style={{ display: "none" }} />}
+                />
+              )}
             </div>
             {!formErrors && !mobileScreen && (
               <div className="button-box-cls">
